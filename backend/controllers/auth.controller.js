@@ -1,6 +1,6 @@
 import { generateTokenAndSetCookie } from "../lib/utils/generateTokenAndSetCookie.js";
 import User from "../models/user.model.js";
-import brypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 
 export const signup = async (req, res) => {
   try {
@@ -8,21 +8,23 @@ export const signup = async (req, res) => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      res.status(400).json({ error: "Invalid email format" });
+      return res.status(400).json({ error: "Invalid email format" });
+    }
+
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ error: "Username is already taken" });
     }
 
     const existingEmail = await User.findOne({ email });
     if (existingEmail) {
-      res.status(400).json({ error: "User email is already taken" });
-    } 
+      return res.status(400).json({ error: "User email is already taken" });
+    }
 
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
-      res.status(400).json({ error: "Username is already taken" });
-    } 
+    if (password.length < 6) return res.status(400).json({ error: "Password should be minimum 6 characters long" });
 
-    const salt = await brypt.genSalt(10);
-    const hashedPassword = brypt.hash(password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
       fullName,
@@ -51,8 +53,8 @@ export const signup = async (req, res) => {
     }
 
   } catch (error) {
-    console.log(`Error in signup controller ${error}`);
-    res.status(500); // Server error
+    console.error(`Error in signup controller ${error.message}`);
+    res.status(500).json({ error: "Server error" }); // Server error
   }
 };
 

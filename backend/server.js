@@ -10,11 +10,13 @@ const app = express();
 
 app.use(express.json());
 
+app.use(express.urlencoded({ extended: true })); // to parse form data
+
 app.use("/api/auth", authRoutes);
 
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
-app.listen(port, () => {
+app.listen(PORT, () => {
   console.log("Running");
   connectMongoDB();
 });
