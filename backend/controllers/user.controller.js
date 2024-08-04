@@ -125,34 +125,50 @@ export const updateUser = async (req, res) => {
 
     const userId = req.user._id;
 
-    const user = await User.findById(userId);
+    let user = await User.findById(userId);
     if (!user) return res.status(404).json({ error: "User not found" });
 
-    if (!currentPassword || !newPassword) {
+    if (
+      (currentPassword && !newPassword) ||
+      (!currentPassword && newPassword)
+    ) {
       return res
         .status(400)
         .json({ error: "Please provide both current and new passwords" });
     }
 
-    const isMatch = await bcrypt.compare(currentPassword, user?.password || "");
-    if (!isMatch)
-      return res.status(400).json({ error: "Current password is incorrect" });
+    if (currentPassword && newPassword) {
+      const isMatch = await bcrypt.compare(
+        currentPassword,
+        user?.password || ""
+      );
+      if (!isMatch)
+        return res.status(400).json({ error: "Current password is incorrect" });
 
-    if (newPassword.length < 6) {
-      return res
-        .status(400)
-        .json({ error: "Password should be at least 6 characters long" });
+      if (newPassword.length < 6) {
+        return res
+          .status(400)
+          .json({ error: "Password should be at least 6 characters long" });
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(newPassword, salt);
     }
 
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(newPassword, salt);
-
     if (profileImg) {
+      if (user.profileImg) {
+        const imageIdFromUrl = user.profileImg.split("/").pop().split(".")[0];
+        await cloudinary.uploader.destroy(imageIdFromUrl);
+      }
       const uploadedResponse = await cloudinary.uploader.upload(profileImg);
       profileImg = uploadedResponse.secure_url;
     }
 
     if (coverImg) {
+      if (user.coverImg) {
+        const imageIdFromUrl = user.coverImg.split("/").pop().split(".")[0];
+        await cloudinary.uploader.destroy(imageIdFromUrl);
+      }
       const uploadedResponse = await cloudinary.uploader.upload(coverImg);
       coverImg = uploadedResponse.secure_url;
     }
