@@ -22,7 +22,9 @@ export const signup = async (req, res) => {
     }
 
     if (password.length < 6) {
-      return res.status(400).json({ error: "Password should be at least 6 characters long" });
+      return res
+        .status(400)
+        .json({ error: "Password should be at least 6 characters long" });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -49,14 +51,12 @@ export const signup = async (req, res) => {
         profileImg: newUser.profileImg,
         coverImg: newUser.coverImg,
       });
-    }
-    else {
+    } else {
       res.status(400).json({ error: "Invalid user data" });
     }
-
   } catch (error) {
     console.error(`Error in signup controller ${error.message}`);
-    res.status(500).json({ error: "Server error" }); // Server error
+    res.status(500).json({ error: "Server error" });
   }
 };
 
@@ -65,12 +65,15 @@ export const login = async (req, res) => {
     const { username, password } = req.body;
 
     const user = await User.findOne({ username });
-    const isPasswordCorrent = await bcrypt.compare(password, user?.password || "");
+    const isPasswordCorrent = await bcrypt.compare(
+      password,
+      user?.password || ""
+    );
 
     if (!user || !isPasswordCorrent) {
       return res.status(400).json({
-        error: "Invalid username or password" 
-      })
+        error: "Invalid username or password",
+      });
     }
 
     generateTokenAndSetCookie(user._id, res);
@@ -84,11 +87,10 @@ export const login = async (req, res) => {
       following: user.following,
       profileImg: user.profileImg,
       coverImg: user.coverImg,
-    })
-    
+    });
   } catch (error) {
     console.error(`Error in login controller ${error.message}`);
-    res.status(500).json({ error: "Server error" }); // Server error
+    res.status(500).json({ error: "Server error" });
   }
 };
 
@@ -96,20 +98,21 @@ export const logout = async (req, res) => {
   try {
     res.cookie("jwt", "", { maxAge: 0 });
     res.status(200).json({
-      message: "Logged out successfully"
+      message: "Logged out successfully",
     });
   } catch (error) {
     console.error(`Error in login controller ${error.message}`);
-    res.status(500).json({ error: "Server error" }); // Server error
+    res.status(500).json({ error: "Server error" });
   }
 };
 
 export const getMe = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).select("-password");
+    const user = req.user;
+    user.password = null;
     res.status(200).json(user);
   } catch (error) {
     console.error(`Error in getMe controller ${error.message}`);
-    res.status(500).json({ error: "Server error" }); // Server error
+    res.status(500).json({ error: "Server error" });
   }
-}
+};

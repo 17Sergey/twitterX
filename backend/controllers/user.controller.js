@@ -16,7 +16,7 @@ export const getUserProfile = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.error(`Error in getUserProfile controller: ${error.message}`);
-    res.status(500).json({ error: "Server error" }); // Server error
+    res.status(500).json({ error: "Server error" });
   }
 };
 
@@ -71,7 +71,7 @@ export const followUnfollowUser = async (req, res) => {
     }
   } catch (error) {
     console.error(`Error in followUnfollowUser controller: ${error.message}`);
-    res.status(500).json({ error: "Server error" }); // Server error
+    res.status(500).json({ error: "Server error" });
   }
 };
 
@@ -106,7 +106,7 @@ export const getSuggestedUsers = async (req, res) => {
     res.status(200).json(suggestedUsers);
   } catch (error) {
     console.error(`Error in getSuggestedUsers controller: ${error.message}`);
-    res.status(500).json({ error: "Server error" }); // Server error
+    res.status(500).json({ error: "Server error" });
   }
 };
 
@@ -124,9 +124,6 @@ export const updateUser = async (req, res) => {
     let { profileImg, coverImg } = req.body;
 
     const userId = req.user._id;
-
-    let user = await User.findById(userId);
-    if (!user) return res.status(404).json({ error: "User not found" });
 
     if (
       (currentPassword && !newPassword) ||
@@ -188,6 +185,6 @@ export const updateUser = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.error(`Error in updateUser controller: ${error.message}`);
-    res.status(500).json({ error: "Server error" }); // Server error
+    res.status(500).json({ error: "Server error" });
   }
 };
