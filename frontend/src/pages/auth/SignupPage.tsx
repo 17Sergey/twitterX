@@ -28,14 +28,14 @@ const SignUpPage = () => {
 
     const isError = false;
     return (
-        <div className="flex w-full h-screen justify-center items-center relative top-2/4">
-            <div className="w-80 mr-36">
+        <div className="flex flex-col md:flex-row w-full h-screen justify-center md:items-center relative top-2/4 p-8">
+            <div className="lg:w-80 md:w-60 w-24 mb-4 lg:mr-36 md:mr-24">
                 <XSvg className="w-full fill-[--theme-accent]" />
             </div>
             <div className="">
                 <h1 className="text-4xl text-[--theme-accent] font-extrabold mb-4">Join today.</h1>
                 <form onSubmit={handleSubmit}>
-                    <label className="input input-bordered rounded mb-4 w-80 flex items-center gap-2">
+                    <label className="input input-bordered rounded mb-4 md:w-80 flex items-center gap-2 w-full">
                         <MdOutlineMail />
                         <input
                             type="email"
@@ -46,7 +46,7 @@ const SignUpPage = () => {
                             value={formData.email}
                         />
                     </label>
-                    <label className="input input-bordered rounded mb-4 flex items-center gap-2">
+                    <label className="input input-bordered rounded mb-4 flex items-center gap-2 w-full">
                         <FaUser />
                         <input
                             type="text"
@@ -57,7 +57,7 @@ const SignUpPage = () => {
                             value={formData.username}
                         />
                     </label>
-                    <label className="input input-bordered rounded mb-4 flex items-center gap-2">
+                    <label className="input input-bordered rounded mb-4 flex items-center gap-2 w-full">
                         <MdDriveFileRenameOutline />
                         <input
                             type="text"
