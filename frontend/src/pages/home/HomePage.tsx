@@ -1,6 +1,6 @@
-import Posts from '../../components/common/Posts';
-import CreatePost from './CreatePost';
-import TabsList from './TabsList';
+import Posts from "../../components/common/Posts/Posts";
+import CreatePost from "./CreatePost";
+import TabsList from "./TabsList";
 
 function HomePage() {
     return (

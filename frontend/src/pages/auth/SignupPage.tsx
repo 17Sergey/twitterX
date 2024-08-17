@@ -1,20 +1,20 @@
 // import { Link } from 'react-router-dom';
 // import { useState } from 'react';
 
-import { MdOutlineMail } from 'react-icons/md';
-import { FaUser } from 'react-icons/fa';
-import { MdPassword } from 'react-icons/md';
-import { MdDriveFileRenameOutline } from 'react-icons/md';
-import XSvg from '../../components/svgs/XSvg';
-import { Link } from 'react-router-dom';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { MdOutlineMail } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
+import { MdPassword } from "react-icons/md";
+import { MdDriveFileRenameOutline } from "react-icons/md";
+import XSvg from "../../components/svgs/XSvg";
+import { Link } from "react-router-dom";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 const SignUpPage = () => {
     const [formData, setFormData] = useState({
-        email: '',
-        username: '',
-        fullName: '',
-        password: '',
+        email: "",
+        username: "",
+        fullName: "",
+        password: "",
     });
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -80,7 +80,7 @@ const SignUpPage = () => {
                         />
                     </label>
                     {isError && <p className="text-error mb-4">Something went wrong</p>}
-                    <button className="btn btn-primary w-full rounded-full text-base-content font-medium text-base">
+                    <button className="btn btn-primary w-full rounded-full text-[--theme-accent] font-medium text-base">
                         Sign up
                     </button>
                     <p className="mb-4 text-base font-thin divider divider-neutral">

@@ -14,7 +14,7 @@ export default function Tab({ activeTab, name, text, toggleActive }: TabProps) {
             <a role="tab">{text}</a>
             <div
                 className={`absolute bottom-0 ${
-                    activeTab === name ? 'w-10' : 'w-0'
+                    activeTab === name ? 'w-1/4' : 'w-0'
                 } transition-all left-1/2 -translate-x-1/2 h-1 rounded-full bg-primary`}
             ></div>
         </div>

@@ -1,10 +1,11 @@
-import { Route, Routes } from 'react-router-dom';
-import HomePage from './pages/home/HomePage';
+import { Route, Routes } from "react-router-dom";
+import HomePage from "./pages/home/HomePage";
 
-import SignupPage from './pages/auth/SignupPage';
-import LoginPage from './pages/auth/LoginPage';
-import { Test } from './pages/Test';
-import Sidebar from './components/common/Sidebar/Sidebar';
+import SignupPage from "./pages/auth/SignupPage";
+import LoginPage from "./pages/auth/LoginPage";
+import Sidebar from "./components/common/Sidebar/Sidebar";
+import RightPanel from "./components/common/RightPanel/RightPanel";
+import Test from "./pages/Test";
 
 function App() {
     return (
@@ -17,6 +18,10 @@ function App() {
                 <Route
                     path="/sidebar"
                     element={<Sidebar />}
+                />
+                <Route
+                    path="/right"
+                    element={<RightPanel />}
                 />
                 <Route
                     path="/signup"

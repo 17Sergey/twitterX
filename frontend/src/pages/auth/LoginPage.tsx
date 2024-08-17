@@ -1,15 +1,15 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { ChangeEvent, FormEvent, useState } from "react";
+import { Link } from "react-router-dom";
 
-import XSvg from '../../components/svgs/XSvg';
+import XSvg from "../../components/svgs/XSvg";
 
-import { MdPassword } from 'react-icons/md';
-import { FaUser } from 'react-icons/fa';
+import { MdPassword } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
-        username: '',
-        password: '',
+        username: "",
+        password: "",
     });
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -35,7 +35,7 @@ const LoginPage = () => {
                         <FaUser />
                         <input
                             type="text"
-                            className="grow "
+                            className="grow"
                             placeholder="Username"
                             name="username"
                             onChange={handleInputChange}
@@ -54,7 +54,7 @@ const LoginPage = () => {
                         />
                     </label>
                     {isError && <p className="text-error mb-4">Something went wrong</p>}
-                    <button className="btn btn-primary w-full rounded-full text-base-content font-medium text-base">
+                    <button className="btn btn-primary w-full rounded-full text-[--theme-accent] font-medium text-base">
                         Log in
                     </button>
                     <p className="mb-4 text-base font-thin divider divider-neutral">

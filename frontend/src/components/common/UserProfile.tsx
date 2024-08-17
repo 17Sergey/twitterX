@@ -1,5 +1,32 @@
-import { ComponentProps } from 'react';
+import { ComponentProps } from "react";
+import { UserData } from "./Sidebar/Sidebar";
+import { Link } from "react-router-dom";
 
-export default function UserProfile({ className }: ComponentProps<'div'>) {
-    return <div className={className}>UserProfile</div>;
+type UserProfileProps = ComponentProps<"div"> & UserData;
+
+export default function UserProfile({
+    className,
+    fullName,
+    username,
+    profileImg,
+    children,
+}: UserProfileProps) {
+    return (
+        <div className={`flex justify-between items-center ${className}`}>
+            <Link to={`/profile/${username}`}>
+                <div className="flex items-center gap-4">
+                    <img
+                        className="w-10 h-10"
+                        src={profileImg || "/avatar-placeholder.png"}
+                        alt="Avatar"
+                    />
+                    <div>
+                        <p className="font-semibold text-[--theme-accent] text-base">{fullName}</p>
+                        <p className="text-sm">@{username}</p>
+                    </div>
+                </div>
+            </Link>
+            {children}
+        </div>
+    );
 }
