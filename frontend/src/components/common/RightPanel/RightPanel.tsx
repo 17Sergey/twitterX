@@ -3,7 +3,7 @@ import UserProfileSkeleton from "../../skeletons/UserProfileSkeleton";
 import UserProfile from "../UserProfile";
 
 export default function RightPanel() {
-    const isLoading = true;
+    const isLoading = false;
     return (
         <div className="mt-4 rounded-lg bg-base-300 p-4">
             <p className="font-bold mb-4">Who to follow</p>

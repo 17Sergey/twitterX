@@ -9,7 +9,7 @@ import Test from "./pages/Test";
 
 function App() {
     return (
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto px-4">
             <Routes>
                 <Route
                     path="/"
