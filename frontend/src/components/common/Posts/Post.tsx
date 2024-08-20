@@ -13,7 +13,7 @@ export default function Post({ post }: PostProps) {
     const isMyPost = post.user.username === "johndoe";
 
     return (
-        <div className="flex gap-4 p-4 border-y border-neutral">
+        <div className="flex gap-4 pr-4 pt-4 pb-4 border-y border-neutral">
             <Link
                 className="w-10 h-10"
                 to={`/profile/${post.user.username}`}

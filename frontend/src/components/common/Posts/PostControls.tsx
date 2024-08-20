@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { PostType } from "../../../utils/dummy";
 
 import { FaRegComment } from "react-icons/fa";
@@ -16,16 +16,17 @@ export default function PostControls({ comments, likes }: PostControlsProps) {
 
     // const isLiked = likes.includes("6658s891");
     const [isLiked, setLiked] = useState(false);
-    const [showComments, setShowComments] = useState(false);
 
     const handleLike = () => {
         setLiked((liked) => !liked);
     };
 
-    const commentsModalRef = useRef(null);
+    const commentsModalRef = useRef<HTMLDialogElement>(null);
 
     const hadleCommentsClick = () => {
-        setShowComments(true);
+        if (commentsModalRef.current) {
+            commentsModalRef.current.showModal();
+        }
     };
 
     return (
@@ -40,7 +41,7 @@ export default function PostControls({ comments, likes }: PostControlsProps) {
                     />
                     <span className="text-sm group-hover:text-primary">{commentsCount}</span>
                 </div>
-                {showComments && <CommentsModal modalRef={commentsModalRef} />}
+                <CommentsModal modalRef={commentsModalRef} />
             </div>
             <div className="flex items-center gap-2 cursor-pointer">
                 <BiRepost className="w-6 h-6 fill-neutral-content hover:fill-primary transition-all" />

@@ -1,12 +1,6 @@
-import React, { MutableRefObject, useEffect } from "react";
+import { RefObject } from "react";
 
-export default function CommentsModal({ modalRef }: { modalRef: MutableRefObject<null> }) {
-    useEffect(() => {
-        modalRef.current.showModal();
-        return () => {
-            modalRef.current.close();
-        };
-    });
+export default function CommentsModal({ modalRef }: { modalRef: RefObject<HTMLDialogElement> }) {
     return (
         <dialog
             id="my_modal_2"
