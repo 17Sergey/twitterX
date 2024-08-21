@@ -13,30 +13,34 @@ export default function Post({ post }: PostProps) {
     const isMyPost = post.user.username === "johndoe";
 
     return (
-        <div className="flex gap-4 pr-4 pt-4 pb-4 border-y border-neutral">
-            <Link
-                className="w-10 h-10"
-                to={`/profile/${post.user.username}`}
-            >
-                <img
-                    src={post.user?.profileImg || "/avatar-placeholder.png"}
-                    alt="Avatar"
-                />
-            </Link>
-            <div className="w-full">
-                <div className="flex justify-between items-center">
-                    <Link
-                        to={`/profile/${post.user.username}`}
-                        className="flex items-baseline gap-4"
-                    >
-                        <p className="font-semibold text-base">{post.user?.fullName}</p>
-                        <p className="font-normal text-sm opacity-30">@{post.user?.username}</p>
-                        <p className="font-normal text-sm opacity-30">{formattedDate}</p>
-                    </Link>
-                    {isMyPost && (
-                        <FaTrash className="w-4 h-4 cursor-pointer hover:fill-error transition-all" />
-                    )}
+        <div className="border-b border-1 border-neutral pr-4 pt-4 pb-4">
+            <div className="flex gap-4">
+                <Link
+                    className="w-10 h-10 flex-shrink-0"
+                    to={`/profile/${post.user.username}`}
+                >
+                    <img
+                        src={post.user?.profileImg || "/avatar-placeholder.png"}
+                        alt="Avatar"
+                    />
+                </Link>
+                <div className="w-full">
+                    <div className="flex justify-between items-center gap-4 relative top-1.5">
+                        <Link
+                            to={`/profile/${post.user.username}`}
+                            className="flex flex-wrap items-baseline gap-4"
+                        >
+                            <p className="font-semibold text-base">{post.user?.fullName}</p>
+                            <p className="font-normal text-sm opacity-30">@{post.user?.username}</p>
+                            <p className="font-normal text-sm opacity-30">{formattedDate}</p>
+                        </Link>
+                        {isMyPost && (
+                            <FaTrash className="w-4 h-4 cursor-pointer hover:fill-error transition-all" />
+                        )}
+                    </div>
                 </div>
+            </div>
+            <div>
                 <p className="mt-2">{post.text}</p>
                 {post.img && (
                     <img

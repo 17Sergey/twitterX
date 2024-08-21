@@ -39,6 +39,15 @@ export const POSTS = [
                     fullName: "Jane Doe",
                 },
             },
+            {
+                _id: "2",
+                text: "Nice Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium nemo provident necessitatibus earum eligendi amet, minima dolore impedit dolor odio?",
+                user: {
+                    username: "janedoe",
+                    profileImg: "/avatars/girl1.png",
+                    fullName: "Jane Doe",
+                },
+            },
         ],
         likes: ["6658s891", "6658s892", "6658s893", "6658s894"],
     },

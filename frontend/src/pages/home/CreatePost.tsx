@@ -31,7 +31,9 @@ function CreatePost() {
 
     const clearImage = () => {
         setImg(null);
-        imgRef.current.value = null;
+        if (imgRef.current) {
+            imgRef.current.value = null;
+        }
     };
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

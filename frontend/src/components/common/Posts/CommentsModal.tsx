@@ -1,21 +1,45 @@
-import { RefObject } from "react";
+import { RefObject, useRef } from "react";
+import { PostType } from "../../../utils/dummy";
+import Comment from "./Comment";
+import AddCommentForm from "./AddCommentForm";
 
-export default function CommentsModal({ modalRef }: { modalRef: RefObject<HTMLDialogElement> }) {
+import { useOnClickOutside } from "usehooks-ts";
+
+type PostControlsProps = {
+    modalRef: RefObject<HTMLDialogElement>;
+} & Pick<PostType, "comments">;
+
+export default function CommentsModal({ modalRef, comments }: PostControlsProps) {
+    const handleClickOutside = () => {
+        if (modalRef.current) {
+            modalRef.current.close();
+        }
+    };
+
+    const modalBox = useRef(null);
+    useOnClickOutside(modalBox, handleClickOutside);
+
     return (
         <dialog
-            id="my_modal_2"
-            className="modal"
+            id="my_modal_3"
+            className="modal cursor-pointer"
             ref={modalRef}
         >
-            <div className="modal-box border border-neutral">
-                <h3 className="font-bold text-lg mb-4">COMMENTS</h3>
-            </div>
-            <form
-                method="dialog"
-                className="modal-backdrop"
+            <div
+                ref={modalBox}
+                className="modal-box mx-2 w-4/5 max-w-6xl border border-neutral md:border-neutral-content cursor-default"
             >
-                <button className="outline-none">close</button>
-            </form>
+                <form method="dialog">
+                    <button className="btn btn-sm btn-circle btn-ghost absolute right-5 top-5 outline-none">
+                        ✕
+                    </button>
+                </form>
+                <h3 className="font-bold text-lg mb-8">COMMENTS</h3>
+                {comments.map((comment) => (
+                    <Comment comment={comment} />
+                ))}
+                <AddCommentForm />
+            </div>
         </dialog>
     );
 }

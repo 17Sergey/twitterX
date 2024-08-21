@@ -30,7 +30,7 @@ export default function PostControls({ comments, likes }: PostControlsProps) {
     };
 
     return (
-        <div className="mt-8 flex justify-between">
+        <div className="mt-6 flex justify-between items-center">
             <div>
                 <div
                     className="flex items-center gap-2 group cursor-pointer"
@@ -41,7 +41,10 @@ export default function PostControls({ comments, likes }: PostControlsProps) {
                     />
                     <span className="text-sm group-hover:text-primary">{commentsCount}</span>
                 </div>
-                <CommentsModal modalRef={commentsModalRef} />
+                <CommentsModal
+                    modalRef={commentsModalRef}
+                    comments={comments}
+                />
             </div>
             <div className="flex items-center gap-2 cursor-pointer">
                 <BiRepost className="w-6 h-6 fill-neutral-content hover:fill-primary transition-all" />
@@ -61,7 +64,7 @@ export default function PostControls({ comments, likes }: PostControlsProps) {
                     {likesCount}
                 </span>
             </div>
-            <FaRegBookmark className="w-4 h-4 cursor-pointer fill-neutral-content hover:fill-[--theme-accent] transition-all" />
+            <FaRegBookmark className="w-4 h-4 relative top-0.5 cursor-pointer fill-neutral-content hover:fill-[--theme-accent] transition-all" />
         </div>
     );
 }

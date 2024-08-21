@@ -7,202 +7,222 @@ import { Link } from "react-router-dom";
 
 import { POSTS } from "../utils/dummy";
 
+import { FaArrowLeft } from "react-icons/fa6";
+import { IoCalendarOutline } from "react-icons/io5";
+import { FaLink } from "react-icons/fa";
+import { MdEdit } from "react-icons/md";
+
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { PostType } from "../utils/dummy";
 
-type PostProps = {
-    post: PostType;
-};
+import { IoSettingsOutline } from "react-icons/io5";
+import { FaUser } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa6";
+import LoadingSpinner from "../components/common/LoadingSpinner";
+import Posts from "../components/common/Posts/Posts";
 
-const Post = ({ post }: PostProps) => {
-    const [comment, setComment] = useState("");
-    const postOwner = post.user;
-    const isLiked = false;
-
-    const isMyPost = true;
-
-    const formattedDate = "1h";
-
-    const isCommenting = false;
-
-    const handleDeletePost = () => {};
-
-    const handlePostComment = (e) => {
-        e.preventDefault();
-    };
-
-    const handleLikePost = () => {};
-
-    return (
-        <>
-            <div className="flex gap-2 items-start p-4 border-b border-gray-700">
-                <div className="avatar">
-                    <Link
-                        to={`/profile/${postOwner.username}`}
-                        className="w-8 rounded-full overflow-hidden"
-                    >
-                        <img src={postOwner.profileImg || "/avatar-placeholder.png"} />
-                    </Link>
-                </div>
-                <div className="flex flex-col flex-1">
-                    <div className="flex gap-2 items-center">
-                        <Link
-                            to={`/profile/${postOwner.username}`}
-                            className="font-bold"
-                        >
-                            {postOwner.fullName}
-                        </Link>
-                        <span className="text-gray-700 flex gap-1 text-sm">
-                            <Link to={`/profile/${postOwner.username}`}>@{postOwner.username}</Link>
-                            <span>·</span>
-                            <span>{formattedDate}</span>
-                        </span>
-                        {isMyPost && (
-                            <span className="flex justify-end flex-1">
-                                <FaTrash
-                                    className="cursor-pointer hover:text-red-500"
-                                    onClick={handleDeletePost}
-                                />
-                            </span>
-                        )}
-                    </div>
-                    <div className="flex flex-col gap-3 overflow-hidden">
-                        <span>{post.text}</span>
-                        {post.img && (
-                            <img
-                                src={post.img}
-                                className="h-80 object-contain rounded-lg border border-gray-700"
-                                alt=""
-                            />
-                        )}
-                    </div>
-                    <div className="flex justify-between mt-3">
-                        <div className="flex gap-4 items-center w-2/3 justify-between">
-                            <div
-                                className="flex gap-1 items-center cursor-pointer group"
-                                onClick={() =>
-                                    document.getElementById("comments_modal" + post._id).showModal()
-                                }
-                            >
-                                <FaRegComment className="w-4 h-4  text-slate-500 group-hover:text-sky-400" />
-                                <span className="text-sm text-slate-500 group-hover:text-sky-400">
-                                    {post.comments.length}
-                                </span>
-                            </div>
-                            {/* We're using Modal Component from DaisyUI */}
-                            <dialog
-                                id={`comments_modal${post._id}`}
-                                className="modal border-none outline-none"
-                            >
-                                <div className="modal-box rounded border border-gray-600">
-                                    <h3 className="font-bold text-lg mb-4">COMMENTS</h3>
-                                    <div className="flex flex-col gap-3 max-h-60 overflow-auto">
-                                        {post.comments.length === 0 && (
-                                            <p className="text-sm text-slate-500">
-                                                No comments yet 🤔 Be the first one 😉
-                                            </p>
-                                        )}
-                                        {post.comments.map((comment) => (
-                                            <div
-                                                key={comment._id}
-                                                className="flex gap-2 items-start"
-                                            >
-                                                <div className="avatar">
-                                                    <div className="w-8 rounded-full">
-                                                        <img
-                                                            src={
-                                                                comment.user.profileImg ||
-                                                                "/avatar-placeholder.png"
-                                                            }
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="flex flex-col">
-                                                    <div className="flex items-center gap-1">
-                                                        <span className="font-bold">
-                                                            {comment.user.fullName}
-                                                        </span>
-                                                        <span className="text-gray-700 text-sm">
-                                                            @{comment.user.username}
-                                                        </span>
-                                                    </div>
-                                                    <div className="text-sm">{comment.text}</div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <form
-                                        className="flex gap-2 items-center mt-4 border-t border-gray-600 pt-2"
-                                        onSubmit={handlePostComment}
-                                    >
-                                        <textarea
-                                            className="textarea w-full p-1 rounded text-md resize-none border focus:outline-none  border-gray-800"
-                                            placeholder="Add a comment..."
-                                            value={comment}
-                                            onChange={(e) => setComment(e.target.value)}
-                                        />
-                                        <button className="btn btn-primary rounded-full btn-sm text-white px-4">
-                                            {isCommenting ? (
-                                                <span className="loading loading-spinner loading-md"></span>
-                                            ) : (
-                                                "Post"
-                                            )}
-                                        </button>
-                                    </form>
-                                </div>
-                                <form
-                                    method="dialog"
-                                    className="modal-backdrop"
-                                >
-                                    <button className="outline-none">close</button>
-                                </form>
-                            </dialog>
-                            <div className="flex gap-1 items-center group cursor-pointer">
-                                <BiRepost className="w-6 h-6  text-slate-500 group-hover:text-green-500" />
-                                <span className="text-sm text-slate-500 group-hover:text-green-500">
-                                    0
-                                </span>
-                            </div>
-                            <div
-                                className="flex gap-1 items-center group cursor-pointer"
-                                onClick={handleLikePost}
-                            >
-                                {!isLiked && (
-                                    <FaRegHeart className="w-4 h-4 cursor-pointer text-slate-500 group-hover:text-pink-500" />
-                                )}
-                                {isLiked && (
-                                    <FaRegHeart className="w-4 h-4 cursor-pointer text-pink-500 " />
-                                )}
-
-                                <span
-                                    className={`text-sm text-slate-500 group-hover:text-pink-500 ${
-                                        isLiked ? "text-pink-500" : ""
-                                    }`}
-                                >
-                                    {post.likes.length}
-                                </span>
-                            </div>
-                        </div>
-                        <div className="flex w-1/3 justify-end gap-2 items-center">
-                            <FaRegBookmark className="w-4 h-4 text-slate-500 cursor-pointer" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+const EditProfileModal = () => {
+    return <div>EditProfileModal</div>;
 };
 
 const Test = () => {
+    const [coverImg, setCoverImg] = useState(null);
+    const [profileImg, setProfileImg] = useState(null);
+    const [feedType, setFeedType] = useState("posts");
+
+    const coverImgRef = useRef(null);
+    const profileImgRef = useRef(null);
+
+    const isLoading = false;
+    const isMyProfile = true;
+
+    const user = {
+        _id: "1",
+        fullName: "John Doe",
+        username: "johndoe",
+        profileImg: "/avatars/boy2.png",
+        coverImg: "/cover.png",
+        bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        link: "https://youtube.com/@asaprogrammer_",
+        following: ["1", "2", "3"],
+        followers: ["1", "2", "3"],
+    };
+
+    const handleImgChange = (e, state) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                state === "coverImg" && setCoverImg(reader.result);
+                state === "profileImg" && setProfileImg(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     return (
-        <div>
-            {POSTS.map((post) => (
-                <Post
-                    key={post._id}
-                    post={post}
-                />
-            ))}
-        </div>
+        <>
+            <div className="flex-[4_4_0]  border-r border-gray-700 min-h-screen ">
+                {/* HEADER */}
+                {/* {isLoading && <ProfileHeaderSkeleton />} */}
+                {!isLoading && !user && <p className="text-center text-lg mt-4">User not found</p>}
+                <div className="flex flex-col">
+                    {!isLoading && user && (
+                        <>
+                            <div className="flex gap-10 px-4 py-2 items-center">
+                                <Link to="/">
+                                    <FaArrowLeft className="w-4 h-4" />
+                                </Link>
+                                <div className="flex flex-col">
+                                    <p className="font-bold text-lg">{user?.fullName}</p>
+                                    <span className="text-sm text-slate-500">
+                                        {POSTS?.length} posts
+                                    </span>
+                                </div>
+                            </div>
+                            {/* COVER IMG */}
+                            <div className="relative group/cover">
+                                <img
+                                    src={coverImg || user?.coverImg || "/cover.png"}
+                                    className="h-52 w-full object-cover"
+                                    alt="cover image"
+                                />
+                                {isMyProfile && (
+                                    <div
+                                        className="absolute top-2 right-2 rounded-full p-2 bg-gray-800 bg-opacity-75 cursor-pointer opacity-0 group-hover/cover:opacity-100 transition duration-200"
+                                        onClick={() => coverImgRef.current.click()}
+                                    >
+                                        <MdEdit className="w-5 h-5 text-white" />
+                                    </div>
+                                )}
+
+                                <input
+                                    type="file"
+                                    hidden
+                                    ref={coverImgRef}
+                                    onChange={(e) => handleImgChange(e, "coverImg")}
+                                />
+                                <input
+                                    type="file"
+                                    hidden
+                                    ref={profileImgRef}
+                                    onChange={(e) => handleImgChange(e, "profileImg")}
+                                />
+                                {/* USER AVATAR */}
+                                <div className="avatar absolute -bottom-16 left-4">
+                                    <div className="w-32 rounded-full relative group/avatar">
+                                        <img
+                                            src={
+                                                profileImg ||
+                                                user?.profileImg ||
+                                                "/avatar-placeholder.png"
+                                            }
+                                        />
+                                        <div className="absolute top-5 right-3 p-1 bg-primary rounded-full group-hover/avatar:opacity-100 opacity-0 cursor-pointer">
+                                            {isMyProfile && (
+                                                <MdEdit
+                                                    className="w-4 h-4 text-white"
+                                                    onClick={() => profileImgRef.current.click()}
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex justify-end px-4 mt-5">
+                                {isMyProfile && <EditProfileModal />}
+                                {!isMyProfile && (
+                                    <button
+                                        className="btn btn-outline rounded-full btn-sm"
+                                        onClick={() => alert("Followed successfully")}
+                                    >
+                                        Follow
+                                    </button>
+                                )}
+                                {(coverImg || profileImg) && (
+                                    <button
+                                        className="btn btn-primary rounded-full btn-sm text-white px-4 ml-2"
+                                        onClick={() => alert("Profile updated successfully")}
+                                    >
+                                        Update
+                                    </button>
+                                )}
+                            </div>
+
+                            <div className="flex flex-col gap-4 mt-14 px-4">
+                                <div className="flex flex-col">
+                                    <span className="font-bold text-lg">{user?.fullName}</span>
+                                    <span className="text-sm text-slate-500">
+                                        @{user?.username}
+                                    </span>
+                                    <span className="text-sm my-1">{user?.bio}</span>
+                                </div>
+
+                                <div className="flex gap-2 flex-wrap">
+                                    {user?.link && (
+                                        <div className="flex gap-1 items-center ">
+                                            <>
+                                                <FaLink className="w-3 h-3 text-slate-500" />
+                                                <a
+                                                    href="https://youtube.com/@asaprogrammer_"
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="text-sm text-blue-500 hover:underline"
+                                                >
+                                                    youtube.com/@asaprogrammer_
+                                                </a>
+                                            </>
+                                        </div>
+                                    )}
+                                    <div className="flex gap-2 items-center">
+                                        <IoCalendarOutline className="w-4 h-4 text-slate-500" />
+                                        <span className="text-sm text-slate-500">
+                                            Joined July 2021
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="flex gap-2">
+                                    <div className="flex gap-1 items-center">
+                                        <span className="font-bold text-xs">
+                                            {user?.following.length}
+                                        </span>
+                                        <span className="text-slate-500 text-xs">Following</span>
+                                    </div>
+                                    <div className="flex gap-1 items-center">
+                                        <span className="font-bold text-xs">
+                                            {user?.followers.length}
+                                        </span>
+                                        <span className="text-slate-500 text-xs">Followers</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex w-full border-b border-gray-700 mt-4">
+                                <div
+                                    className="flex justify-center flex-1 p-3 hover:bg-secondary transition duration-300 relative cursor-pointer"
+                                    onClick={() => setFeedType("posts")}
+                                >
+                                    Posts
+                                    {feedType === "posts" && (
+                                        <div className="absolute bottom-0 w-10 h-1 rounded-full bg-primary" />
+                                    )}
+                                </div>
+                                <div
+                                    className="flex justify-center flex-1 p-3 text-slate-500 hover:bg-secondary transition duration-300 relative cursor-pointer"
+                                    onClick={() => setFeedType("likes")}
+                                >
+                                    Likes
+                                    {feedType === "likes" && (
+                                        <div className="absolute bottom-0 w-10  h-1 rounded-full bg-primary" />
+                                    )}
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+                    <Posts />
+                </div>
+            </div>
+        </>
     );
 };
 export default Test;
