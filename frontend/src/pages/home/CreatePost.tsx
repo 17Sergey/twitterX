@@ -14,7 +14,7 @@ function CreatePost() {
     };
 
     const [img, setImg] = useState<string | null>(null);
-    const imgRef = useRef(null);
+    const imgRef = useRef<HTMLInputElement>(null);
 
     const handleImgChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];

@@ -36,7 +36,10 @@ export default function CommentsModal({ modalRef, comments }: PostControlsProps)
                 </form>
                 <h3 className="font-bold text-lg mb-8">COMMENTS</h3>
                 {comments.map((comment) => (
-                    <Comment comment={comment} />
+                    <Comment
+                        key={comment._id}
+                        comment={comment}
+                    />
                 ))}
                 <AddCommentForm />
             </div>

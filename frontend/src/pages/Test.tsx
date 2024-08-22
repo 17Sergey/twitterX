@@ -20,10 +20,7 @@ import { FaUser } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 import Posts from "../components/common/Posts/Posts";
-
-const EditProfileModal = () => {
-    return <div>EditProfileModal</div>;
-};
+import ProfileHeaderSkeleton from "../components/skeletons/ProfileHeaderSkeleton";
 
 const Test = () => {
     const [coverImg, setCoverImg] = useState(null);
@@ -64,7 +61,7 @@ const Test = () => {
         <>
             <div className="flex-[4_4_0]  border-r border-gray-700 min-h-screen ">
                 {/* HEADER */}
-                {/* {isLoading && <ProfileHeaderSkeleton />} */}
+                {isLoading && <ProfileHeaderSkeleton />}
                 {!isLoading && !user && <p className="text-center text-lg mt-4">User not found</p>}
                 <div className="flex flex-col">
                     {!isLoading && user && (
