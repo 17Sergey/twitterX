@@ -21,10 +21,10 @@ export default function Sidebar() {
         username: "johndoe",
         profileImg: "/avatars/boy1.png",
     };
-    const iconStyles = `w-8 h-8`;
+    const iconStyles = `w-7 h-7`;
 
     return (
-        <div className="max-w-56 flex flex-col h-screen pt-2 pb-8 border-r border-neutral">
+        <div className="max-w-56 flex flex-col shrink-0 h-screen pb-8 pr-2 sticky top-6">
             <Link
                 to="/"
                 className="px-4"
@@ -54,7 +54,7 @@ export default function Sidebar() {
                     className={"mt-auto px-4 py-2 rounded-full transition-colors hover:bg-neutral"}
                 >
                     <Link to="/login">
-                        <BiLogOut className="w-7 h-7" />
+                        <BiLogOut className="w-7 h-7 ml-4" />
                     </Link>
                 </UserProfile>
             )}

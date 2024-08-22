@@ -46,7 +46,7 @@ function CreatePost() {
     };
 
     return (
-        <div>
+        <div className="p-4">
             <div className="flex items-center gap-4">
                 <img
                     className="w-10 h-10"

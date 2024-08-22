@@ -31,7 +31,7 @@ export default function Notifications() {
     };
 
     return (
-        <div className="border-x border-neutral min-h-screen">
+        <div className="min-h-screen">
             <div className="p-4 border-b border-neutral flex justify-between items-center">
                 <span className="font-bold">Notifications</span>
                 <div className="dropdown dropdown-end">

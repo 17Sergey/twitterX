@@ -32,7 +32,7 @@ export default function ProfilePage() {
 
     return (
         <div>
-            <div className="flex items-center gap-4 py-4">
+            <div className="flex items-center gap-4 py-4 px-4">
                 <Link to="/">
                     <button className="btn btn-sm btn-circle btn-ghost">
                         <FaArrowLeft className="w-4 h-4" />

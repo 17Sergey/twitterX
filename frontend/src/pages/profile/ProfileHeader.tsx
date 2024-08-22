@@ -79,8 +79,8 @@ export default function ProfileHeader() {
                     </form>
                 )}
             </div>
-            <div className="flex items-start justify-between">
-                <div className="relative group -translate-y-1/2 md:pl-4">
+            <div className="flex items-start justify-between px-4">
+                <div className="relative group -translate-y-1/2">
                     <img
                         className="w-32 h-32 object-cover rounded-full"
                         src={profileImg || user?.profileImg || "./avatar-placeholder.png"}

@@ -7,7 +7,7 @@ import { useState } from "react";
 function HomePage() {
     const [activeTab, setActiveTab] = useState("forYou");
     return (
-        <div className="min-h-screen border-r border-neutral">
+        <div className="min-h-screen">
             <TabsList>
                 <Tab
                     activeTab={activeTab}
