@@ -28,9 +28,10 @@ export default function RightPanel() {
                     return (
                         <UserProfile
                             {...user}
+                            key={user._id}
                             className="mb-4 last:mb-0"
                         >
-                            <button className="ml-6 btn bg-[--theme-accent] hover:bg-neutral-content text-primary-content btn-sm rounded-full">
+                            <button className="ml-8 btn bg-[--theme-accent] hover:bg-neutral-content text-primary-content btn-sm rounded-full">
                                 Follow
                             </button>
                         </UserProfile>

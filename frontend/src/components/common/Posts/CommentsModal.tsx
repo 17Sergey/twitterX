@@ -27,7 +27,7 @@ export default function CommentsModal({ modalRef, comments }: PostControlsProps)
         >
             <div
                 ref={modalBox}
-                className="modal-box mx-2 w-4/5 max-w-6xl border border-neutral md:border-neutral-content cursor-default"
+                className="modal-box mx-2 w-4/5 max-w-3xl border border-neutral md:border-neutral-content cursor-default"
             >
                 <form method="dialog">
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-5 top-5 outline-none">

@@ -8,6 +8,10 @@ import { MdDriveFileRenameOutline } from "react-icons/md";
 import XSvg from "../../components/svgs/XSvg";
 import { Link } from "react-router-dom";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import LoadingSpinner from "../../components/common/LoadingSpinner";
+import toast from "react-hot-toast";
+import { apiHandler } from "../../api/apiHandler";
 
 const SignUpPage = () => {
     const [formData, setFormData] = useState({
@@ -17,16 +21,25 @@ const SignUpPage = () => {
         password: "",
     });
 
+    const { mutate, isError, isPending } = useMutation({
+        mutationFn: apiHandler.signUp,
+        onSuccess: () => {
+            toast.success("Account created successfully");
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData);
+        mutate(formData);
     };
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const isError = false;
     return (
         <div className="flex flex-col md:flex-row w-full h-screen justify-center md:items-center relative top-2/4 p-8">
             <div className="lg:w-80 md:w-60 w-24 mb-4 lg:mr-36 md:mr-24">
@@ -35,7 +48,7 @@ const SignUpPage = () => {
             <div className="">
                 <h1 className="text-4xl text-[--theme-accent] font-extrabold mb-4">Join today.</h1>
                 <form onSubmit={handleSubmit}>
-                    <label className="input input-bordered rounded mb-4 md:w-80 flex items-center gap-2 w-full">
+                    <label className="input input-bordered rounded mb-4 md:w-80 flex items-center gap-2 w-full bg-transparent">
                         <MdOutlineMail />
                         <input
                             type="email"
@@ -50,7 +63,7 @@ const SignUpPage = () => {
                         <FaUser />
                         <input
                             type="text"
-                            className="grow "
+                            className="grow"
                             placeholder="Username"
                             name="username"
                             onChange={handleInputChange}
@@ -79,8 +92,9 @@ const SignUpPage = () => {
                             value={formData.password}
                         />
                     </label>
-                    {isError && <p className="text-error mb-4">Something went wrong</p>}
+                    {isError && <p className="text-error mb-4 text-center">Something went wrong</p>}
                     <button className="btn btn-primary w-full rounded-full text-[--theme-accent] font-medium text-base">
+                        {isPending && <LoadingSpinner className="loading-xs" />}
                         Sign up
                     </button>
                     <p className="mb-4 text-base font-thin divider divider-neutral">

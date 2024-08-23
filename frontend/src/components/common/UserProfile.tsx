@@ -21,7 +21,9 @@ export default function UserProfile({
                         alt="Avatar"
                     />
                     <div>
-                        <p className="font-semibold text-[--theme-accent] text-base">{fullName}</p>
+                        <p className="font-semibold text-[--theme-accent] text-base max-w-24 truncate">
+                            {fullName}
+                        </p>
                         <p className="text-sm">@{username}</p>
                     </div>
                 </div>

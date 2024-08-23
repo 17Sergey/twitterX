@@ -5,6 +5,10 @@ import XSvg from "../../components/svgs/XSvg";
 
 import { MdPassword } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
+import { apiHandler } from "../../api/apiHandler";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import LoadingSpinner from "../../components/common/LoadingSpinner";
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
@@ -12,16 +16,24 @@ const LoginPage = () => {
         password: "",
     });
 
+    const { mutate, isError, isPending } = useMutation({
+        mutationFn: apiHandler.logIn,
+        onSuccess: () => {
+            toast.success("Logged in successfully");
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData);
+        mutate(formData);
     };
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
-    const isError = false;
 
     return (
         <div className="flex flex-col md:flex-row w-full h-screen justify-center md:items-center relative top-2/4 p-8">
@@ -53,8 +65,9 @@ const LoginPage = () => {
                             value={formData.password}
                         />
                     </label>
-                    {isError && <p className="text-error mb-4">Something went wrong</p>}
+                    {isError && <p className="text-error mb-4 text-center">Something went wrong</p>}
                     <button className="btn btn-primary w-full rounded-full text-[--theme-accent] font-medium text-base">
+                        {isPending && <LoadingSpinner className="loading-xs" />}
                         Log in
                     </button>
                     <p className="mb-4 text-base font-thin divider divider-neutral">

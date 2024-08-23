@@ -7,6 +7,7 @@ import Sidebar from "./components/common/Sidebar/Sidebar";
 import RightPanel from "./components/common/RightPanel/RightPanel";
 import Notifications from "./pages/notifications/Notifications";
 import ProfilePage from "./pages/profile/ProfilePage";
+import ToasterModified from "./components/common/ToasterModified";
 
 function App() {
     return (
@@ -14,14 +15,6 @@ function App() {
             <Sidebar />
             <main className="border-x border-neutral w-full">
                 <Routes>
-                    <Route
-                        path="/signup"
-                        element={<SignupPage />}
-                    />
-                    <Route
-                        path="/login"
-                        element={<LoginPage />}
-                    />
                     <Route
                         path="/"
                         element={<HomePage />}
@@ -31,12 +24,22 @@ function App() {
                         element={<Notifications />}
                     />
                     <Route
-                        path="/profile"
+                        path="/profile/:username?"
                         element={<ProfilePage />}
+                    />
+                    <Route
+                        path="/signup"
+                        element={<SignupPage />}
+                    />
+                    <Route
+                        path="/login"
+                        element={<LoginPage />}
                     />
                 </Routes>
             </main>
             <RightPanel />
+            {/* For messages on screen */}
+            <ToasterModified />
         </div>
     );
 }

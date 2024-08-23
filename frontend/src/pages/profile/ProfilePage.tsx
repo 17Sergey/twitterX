@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Posts from "../../components/common/Posts/Posts";
-import TabsList from "../../components/common/TabsList";
-import Tab from "../home/Tab";
+import TabsList from "../../components/common/Tabs/TabsList";
+import Tab from "../../components/common/Tabs/Tab";
 import { FaArrowLeft } from "react-icons/fa";
 import ProfileHeaderSkeleton from "../../components/skeletons/ProfileHeaderSkeleton";
 import ProfileHeader from "./ProfileHeader";

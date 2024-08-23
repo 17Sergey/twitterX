@@ -1,7 +1,7 @@
 import Posts from "../../components/common/Posts/Posts";
 import CreatePost from "./CreatePost";
-import TabsList from "../../components/common/TabsList";
-import Tab from "./Tab";
+import TabsList from "../../components/common/Tabs/TabsList";
+import Tab from "../../components/common/Tabs/Tab";
 import { useState } from "react";
 
 function HomePage() {
