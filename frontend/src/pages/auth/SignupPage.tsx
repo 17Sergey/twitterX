@@ -8,10 +8,10 @@ import { MdDriveFileRenameOutline } from "react-icons/md";
 import XSvg from "../../components/svgs/XSvg";
 import { Link } from "react-router-dom";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import toast from "react-hot-toast";
-import { apiHandler } from "../../api/apiHandler";
+import { authApi } from "../../api/authApi";
 
 const SignUpPage = () => {
     const [formData, setFormData] = useState({
@@ -21,10 +21,13 @@ const SignUpPage = () => {
         password: "",
     });
 
+    const queryClient = useQueryClient();
+
     const { mutate, isError, isPending } = useMutation({
-        mutationFn: apiHandler.signUp,
+        mutationFn: authApi.signUp,
         onSuccess: () => {
             toast.success("Account created successfully");
+            queryClient.invalidateQueries({ queryKey: ["userAuth"] });
         },
         onError: (error) => {
             toast.error(error.message);

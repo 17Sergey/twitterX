@@ -16,7 +16,7 @@ export default function UserProfile({
             <Link to={`/profile/${username}`}>
                 <div className="flex items-center gap-4">
                     <img
-                        className="w-10 h-10"
+                        className="w-10 h-10 rounded-full"
                         src={profileImg || "/avatar-placeholder.png"}
                         alt="Avatar"
                     />

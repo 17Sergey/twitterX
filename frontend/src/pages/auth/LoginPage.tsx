@@ -5,8 +5,8 @@ import XSvg from "../../components/svgs/XSvg";
 
 import { MdPassword } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
-import { apiHandler } from "../../api/apiHandler";
-import { useMutation } from "@tanstack/react-query";
+import { authApi } from "../../api/authApi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 
@@ -16,10 +16,13 @@ const LoginPage = () => {
         password: "",
     });
 
+    const queryClient = useQueryClient();
+
     const { mutate, isError, isPending } = useMutation({
-        mutationFn: apiHandler.logIn,
+        mutationFn: authApi.logIn,
         onSuccess: () => {
             toast.success("Logged in successfully");
+            queryClient.invalidateQueries({ queryKey: ["userAuth"] });
         },
         onError: (error) => {
             toast.error(error.message);

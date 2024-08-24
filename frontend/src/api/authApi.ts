@@ -50,8 +50,18 @@ async function logOut() {
     return data;
 }
 
-export const apiHandler = {
+async function getMe() {
+    const res = await fetch("/api/auth/me");
+
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    return data;
+}
+
+export const authApi = {
     signUp,
     logIn,
     logOut,
+    getMe,
 };

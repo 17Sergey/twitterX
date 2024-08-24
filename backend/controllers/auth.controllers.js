@@ -1,6 +1,6 @@
-import { generateTokenAndSetCookie } from '../lib/utils/generateTokenAndSetCookie.js';
-import User from '../models/user.model.js';
-import bcrypt from 'bcryptjs';
+import { generateTokenAndSetCookie } from "../lib/utils/generateTokenAndSetCookie.js";
+import User from "../models/user.model.js";
+import bcrypt from "bcryptjs";
 
 export const signup = async (req, res) => {
     try {
@@ -8,21 +8,21 @@ export const signup = async (req, res) => {
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            return res.status(400).json({ error: 'Invalid email format' });
+            return res.status(400).json({ error: "Invalid email format" });
         }
 
         const existingUser = await User.findOne({ username });
         if (existingUser) {
-            return res.status(400).json({ error: 'Username is already taken' });
+            return res.status(400).json({ error: "Username is already taken" });
         }
 
         const existingEmail = await User.findOne({ email });
         if (existingEmail) {
-            return res.status(400).json({ error: 'User email is already taken' });
+            return res.status(400).json({ error: "User email is already taken" });
         }
 
         if (password.length < 6) {
-            return res.status(400).json({ error: 'Password should be at least 6 characters long' });
+            return res.status(400).json({ error: "Password should be at least 6 characters long" });
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -50,11 +50,11 @@ export const signup = async (req, res) => {
                 coverImg: newUser.coverImg,
             });
         } else {
-            res.status(400).json({ error: 'Invalid user data' });
+            res.status(400).json({ error: "Invalid user data" });
         }
     } catch (error) {
         console.error(`Error in signup controller ${error.message}`);
-        res.status(500).json({ error: 'Server error' });
+        res.status(500).json({ error: "Server error" });
     }
 };
 
@@ -63,11 +63,11 @@ export const login = async (req, res) => {
         const { username, password } = req.body;
 
         const user = await User.findOne({ username });
-        const isPasswordCorrent = await bcrypt.compare(password, user?.password || '');
+        const isPasswordCorrent = await bcrypt.compare(password, user?.password || "");
 
         if (!user || !isPasswordCorrent) {
             return res.status(400).json({
-                error: 'Invalid username or password',
+                error: "Invalid username or password",
             });
         }
 
@@ -85,19 +85,19 @@ export const login = async (req, res) => {
         });
     } catch (error) {
         console.error(`Error in login controller ${error.message}`);
-        res.status(500).json({ error: 'Server error' });
+        res.status(500).json({ error: "Server error" });
     }
 };
 
 export const logout = async (req, res) => {
     try {
-        res.cookie('jwt', '', { maxAge: 0 });
+        res.cookie("jwt", "", { maxAge: 0 });
         res.status(200).json({
-            message: 'Logged out successfully',
+            message: "Logged out successfully",
         });
     } catch (error) {
         console.error(`Error in login controller ${error.message}`);
-        res.status(500).json({ error: 'Server error' });
+        res.status(500).json({ error: "Server error" });
     }
 };
 
@@ -108,6 +108,6 @@ export const getMe = async (req, res) => {
         res.status(200).json(user);
     } catch (error) {
         console.error(`Error in getMe controller ${error.message}`);
-        res.status(500).json({ error: 'Server error' });
+        res.status(500).json({ error: `Server error` });
     }
 };

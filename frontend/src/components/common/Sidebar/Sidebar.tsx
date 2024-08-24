@@ -9,8 +9,8 @@ import { IoNotifications } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import toast from "react-hot-toast";
-import { apiHandler } from "../../../api/apiHandler";
-import { useMutation } from "@tanstack/react-query";
+import { authApi } from "../../../api/authApi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export type UserData = {
     fullName: string;
@@ -19,16 +19,15 @@ export type UserData = {
 };
 
 export default function Sidebar() {
-    const data: UserData = {
-        fullName: "John Doe",
-        username: "johndoe",
-        profileImg: "/avatars/boy1.png",
-    };
+    const { data: authUser } = useQuery({ queryKey: ["userAuth"] });
+
+    const queryClient = useQueryClient();
 
     const { mutate } = useMutation({
-        mutationFn: apiHandler.logOut,
+        mutationFn: authApi.logOut,
         onSuccess: (data) => {
             toast.success(data.message);
+            queryClient.invalidateQueries({ queryKey: ["userAuth"] });
         },
         onError: (error) => {
             toast.error(error.message);
@@ -42,7 +41,7 @@ export default function Sidebar() {
     const iconStyles = `w-7 h-7`;
 
     return (
-        <div className="max-w-56 flex flex-col shrink-0 h-screen pb-8 pr-2 sticky top-6">
+        <div className="max-w-56 flex flex-col shrink-0 h-screen pb-8 pr-2 sticky top-6 border-r border-neutral">
             <Link
                 to="/"
                 className="px-4"
@@ -63,12 +62,14 @@ export default function Sidebar() {
                 <SidebarMenuItem
                     icon={<FaUser className={iconStyles} />}
                     text={"Profile"}
-                    path={`/profile/${data?.username}`}
+                    path={`/profile/${authUser?.username}`}
                 />
             </SidebarMenu>
-            {data && (
+            {authUser && (
                 <UserProfile
-                    {...data}
+                    fullName={authUser.fullName}
+                    username={authUser.username}
+                    profileImg={authUser.profileImg}
                     className={"mt-auto px-4 py-2 rounded-full transition-colors hover:bg-neutral"}
                 >
                     <Link
