@@ -12,7 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { authApi } from "./api/authApi";
 
 import LoadingSpinner from "./components/common/LoadingSpinner";
-import toast from "react-hot-toast";
+import ProtectedRoutes from "./pages/ProtectedRoutes";
 
 function App() {
     const { data, isLoading, isError } = useQuery({
@@ -21,7 +21,7 @@ function App() {
         retry: false,
     });
 
-    // If we log out and invalidate the query, then the data retrieved is an empty object and it still is a thuthy value.
+    // If we log out and invalidate the query, then the retrieved data is an empty object {} and it still is a thuthy value.
     // So this thick with null helps us.
     const userAuth = isError ? null : data;
 
@@ -39,18 +39,20 @@ function App() {
             {userAuth && <Sidebar />}
             <main className="w-full">
                 <Routes>
-                    <Route
-                        path="/"
-                        element={userAuth ? <HomePage /> : <Navigate to="/login" />}
-                    />
-                    <Route
-                        path="/notifications"
-                        element={userAuth ? <Notifications /> : <Navigate to="/login" />}
-                    />
-                    <Route
-                        path="/profile/:username?"
-                        element={userAuth ? <ProfilePage /> : <Navigate to="/login" />}
-                    />
+                    <Route element={<ProtectedRoutes userAuth={userAuth} />}>
+                        <Route
+                            path="/"
+                            element={<HomePage />}
+                        />
+                        <Route
+                            path="/notifications"
+                            element={<Notifications />}
+                        />
+                        <Route
+                            path="/profile/:username?"
+                            element={<ProfilePage />}
+                        />
+                    </Route>
                     <Route
                         path="/signup"
                         element={userAuth ? <Navigate to="/" /> : <SignupPage />}
