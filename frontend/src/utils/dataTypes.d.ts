@@ -15,6 +15,7 @@ export type PostType = {
     text: string;
     img?: string;
     user: {
+        _id: string;
         username: string;
         profileImg: string;
         fullName: string;

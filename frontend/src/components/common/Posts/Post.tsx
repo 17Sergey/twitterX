@@ -1,8 +1,12 @@
-import { PostType } from "../../../utils/dataTypes";
+import { PostType, UserType } from "../../../utils/dataTypes";
 import { Link } from "react-router-dom";
 
 import { FaTrash } from "react-icons/fa";
 import PostControls from "./PostControls";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { postsAPI } from "../../../api/postsAPI";
+import toast from "react-hot-toast";
+import LoadingSpinner from "../LoadingSpinner";
 
 type PostProps = {
     post: PostType;
@@ -10,7 +14,28 @@ type PostProps = {
 
 export default function Post({ post }: PostProps) {
     const formattedDate = "1h";
-    const isMyPost = post.user.username === "johndoe";
+
+    const { data: userAuth } = useQuery<UserType>({ queryKey: ["userAuth"] });
+    const isMyPost = post.user?._id === userAuth?._id;
+
+    const queryClient = useQueryClient();
+
+    const { mutate: deleteMutation, isPending } = useMutation({
+        mutationFn: () => postsAPI.deletePost(post._id),
+        onSuccess: () => {
+            toast.success("Post deleted successfully");
+            queryClient.invalidateQueries({
+                queryKey: ["posts"],
+            });
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
+
+    const handleDeletePost = () => {
+        deleteMutation();
+    };
 
     return (
         <div className="border-b border-1 border-neutral pt-4 pb-4">
@@ -35,9 +60,13 @@ export default function Post({ post }: PostProps) {
                             <p className="font-normal text-sm opacity-30">@{post.user?.username}</p>
                             <p className="font-normal text-sm opacity-30">{formattedDate}</p>
                         </Link>
-                        {isMyPost && (
-                            <FaTrash className="w-4 h-4 cursor-pointer hover:fill-error transition-all" />
+                        {isMyPost && !isPending && (
+                            <FaTrash
+                                onClick={handleDeletePost}
+                                className="w-4 h-4 cursor-pointer hover:fill-error transition-all"
+                            />
                         )}
+                        {isPending && <LoadingSpinner className="loading-xs cursor-pointer" />}
                     </div>
                 </div>
             </div>

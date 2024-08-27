@@ -11,6 +11,7 @@ import { BiLogOut } from "react-icons/bi";
 import toast from "react-hot-toast";
 import { authAPI } from "../../../api/authAPI";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { UserType } from "../../../utils/dataTypes";
 
 export type UserData = {
     fullName: string;
@@ -19,7 +20,7 @@ export type UserData = {
 };
 
 export default function Sidebar() {
-    const { data: authUser } = useQuery({ queryKey: ["userAuth"] });
+    const { data: userAuth } = useQuery<UserType>({ queryKey: ["userAuth"] });
 
     const queryClient = useQueryClient();
 
@@ -62,14 +63,14 @@ export default function Sidebar() {
                 <SidebarMenuItem
                     icon={<FaUser className={iconStyles} />}
                     text={"Profile"}
-                    path={`/profile/${authUser?.username}`}
+                    path={`/profile/${userAuth?.username}`}
                 />
             </SidebarMenu>
-            {authUser && (
+            {userAuth && (
                 <UserProfile
-                    fullName={authUser.fullName}
-                    username={authUser.username}
-                    profileImg={authUser.profileImg}
+                    fullName={userAuth.fullName}
+                    username={userAuth.username}
+                    profileImg={userAuth.profileImg}
                     className={"mt-auto px-4 py-2 rounded-full transition-colors hover:bg-neutral"}
                 >
                     <Link
