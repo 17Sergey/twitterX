@@ -13,7 +13,7 @@ type PostProps = {
 };
 
 export default function Post({ post }: PostProps) {
-    const formattedDate = "1h";
+    const formattedDate = "1h"; // TODO
 
     const { data: userAuth } = useQuery<UserType>({ queryKey: ["userAuth"] });
     const isMyPost = post.user?._id === userAuth?._id;

@@ -3,11 +3,12 @@ import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { CiImageOn } from "react-icons/ci";
 import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoCloseSharp } from "react-icons/io5";
+import toast from "react-hot-toast";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { UserType } from "../../utils/dataTypes";
+import { postsAPI } from "../../api/postsAPI";
 
 function CreatePost() {
-    const isPending = false;
-    const isError = false;
-
     const [text, setText] = useState("");
     const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setText(e.target.value);
@@ -36,25 +37,43 @@ function CreatePost() {
         }
     };
 
+    const { data: userAuth } = useQuery<UserType>({ queryKey: ["userAuth"] });
+
+    const queryClient = useQueryClient();
+
+    const { mutate: createMutation, isPending } = useMutation({
+        mutationFn: () => postsAPI.createPost({ text, img }),
+        onSuccess: () => {
+            toast.success("Post created successfully");
+            queryClient.invalidateQueries({
+                queryKey: ["posts"],
+            });
+
+            setText("");
+            clearImage();
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-    };
-
-    const data = {
-        fullname: "John Doe",
-        profileImg: "/avatars/boy1.png",
+        createMutation();
     };
 
     return (
         <div className="p-4">
             <div className="flex items-center gap-4">
                 <img
-                    className="w-10 h-10"
-                    src={data.profileImg || "/avatar-placeholder.png"}
+                    className="w-10 h-10 rounded-full"
+                    src={userAuth?.profileImg || "/avatar-placeholder.png"}
                     alt="Avatar"
                 />
                 <div>
-                    <p className="font-semibold text-[--theme-accent] text-base">{data.fullname}</p>
+                    <p className="font-semibold text-[--theme-accent] text-base">
+                        {userAuth?.fullName}
+                    </p>
                 </div>
             </div>
             <form onSubmit={handleSubmit}>
@@ -78,7 +97,6 @@ function CreatePost() {
                     </div>
                 )}
                 <div className="pt-2 border-t border-t-neutral">
-                    {isError && <p className="text-error mb-4">Something went wrong</p>}
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <CiImageOn
