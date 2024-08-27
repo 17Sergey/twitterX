@@ -59,7 +59,7 @@ async function getMe() {
     return data;
 }
 
-export const authApi = {
+export const authAPI = {
     signUp,
     logIn,
     logOut,

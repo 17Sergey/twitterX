@@ -23,7 +23,7 @@ function HomePage() {
                 />
             </TabsList>
             <CreatePost />
-            <Posts />
+            <Posts activeTab={activeTab} />
         </div>
     );
 }

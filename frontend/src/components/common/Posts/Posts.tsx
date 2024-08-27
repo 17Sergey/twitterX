@@ -1,9 +1,33 @@
 import Post from "./Post";
 import PostSkeleton from "../../skeletons/PostSkeleton";
-import { POSTS } from "../../../utils/dummy";
+import { PostType } from "../../../utils/dataTypes";
 
-const Posts = () => {
-    const isLoading = false;
+import { useQuery } from "@tanstack/react-query";
+import { postsAPI } from "../../../api/postsAPI";
+
+const getPostsEndpoint = (activeTab: string): string => {
+    switch (activeTab) {
+        case "forYou":
+            return "/api/posts/all";
+        case "following":
+            return "/api/posts/following";
+
+        default:
+            return "/api/posts/all";
+    }
+};
+
+const Posts = ({ activeTab }: { activeTab: string }) => {
+    const endpoint = getPostsEndpoint(activeTab);
+
+    const {
+        data: posts,
+        isLoading,
+        error,
+    } = useQuery({
+        queryKey: ["posts", activeTab],
+        queryFn: () => postsAPI.getPosts(endpoint),
+    });
 
     return (
         <>
@@ -14,12 +38,17 @@ const Posts = () => {
                     <PostSkeleton />
                 </div>
             )}
-            {!isLoading && POSTS?.length === 0 && (
+            {!isLoading && posts?.length === 0 && (
                 <p className="text-center my-4">No posts in this tab. Switch 👻</p>
             )}
-            {!isLoading && POSTS && (
+            {error && (
+                <p className="text-center text-error-content my-4">
+                    Sorry, it looks like an error occured: {error.message}
+                </p>
+            )}
+            {!isLoading && posts && (
                 <div>
-                    {POSTS.map((post) => (
+                    {posts.map((post: PostType) => (
                         <Post
                             key={post._id}
                             post={post}

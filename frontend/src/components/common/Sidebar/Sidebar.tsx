@@ -9,7 +9,7 @@ import { IoNotifications } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import toast from "react-hot-toast";
-import { authApi } from "../../../api/authApi";
+import { authAPI } from "../../../api/authAPI";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export type UserData = {
@@ -24,7 +24,7 @@ export default function Sidebar() {
     const queryClient = useQueryClient();
 
     const { mutate } = useMutation({
-        mutationFn: authApi.logOut,
+        mutationFn: authAPI.logOut,
         onSuccess: (data) => {
             toast.success(data.message);
             queryClient.invalidateQueries({ queryKey: ["userAuth"] });
@@ -41,7 +41,7 @@ export default function Sidebar() {
     const iconStyles = `w-7 h-7`;
 
     return (
-        <div className="max-w-56 flex flex-col shrink-0 h-screen pb-8 pr-2 sticky top-6 border-r border-neutral">
+        <div className="max-w-56 flex flex-col shrink-0 h-screen pb-8 pr-2 pt-4 sticky top-0 border-r border-neutral">
             <Link
                 to="/"
                 className="px-4"

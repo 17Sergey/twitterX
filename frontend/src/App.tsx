@@ -9,7 +9,7 @@ import Notifications from "./pages/notifications/Notifications";
 import ProfilePage from "./pages/profile/ProfilePage";
 import ToasterModified from "./components/common/ToasterModified";
 import { useQuery } from "@tanstack/react-query";
-import { authApi } from "./api/authApi";
+import { authAPI } from "./api/authAPI";
 
 import LoadingSpinner from "./components/common/LoadingSpinner";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
@@ -17,7 +17,7 @@ import ProtectedRoutes from "./pages/ProtectedRoutes";
 function App() {
     const { data, isLoading, isError } = useQuery({
         queryKey: ["userAuth"],
-        queryFn: authApi.getMe,
+        queryFn: authAPI.getMe,
         retry: false,
     });
 

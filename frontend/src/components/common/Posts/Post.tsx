@@ -1,4 +1,4 @@
-import { PostType } from "../../../utils/dummy";
+import { PostType } from "../../../utils/dataTypes";
 import { Link } from "react-router-dom";
 
 import { FaTrash } from "react-icons/fa";
@@ -20,6 +20,7 @@ export default function Post({ post }: PostProps) {
                     to={`/profile/${post.user.username}`}
                 >
                     <img
+                        className="rounded-full"
                         src={post.user?.profileImg || "/avatar-placeholder.png"}
                         alt="Avatar"
                     />

@@ -1,6 +1,3 @@
-// import { Link } from 'react-router-dom';
-// import { useState } from 'react';
-
 import { MdOutlineMail } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { MdPassword } from "react-icons/md";
@@ -11,7 +8,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import toast from "react-hot-toast";
-import { authApi } from "../../api/authApi";
+import { authAPI } from "../../api/authAPI";
 
 const SignUpPage = () => {
     const [formData, setFormData] = useState({
@@ -24,7 +21,7 @@ const SignUpPage = () => {
     const queryClient = useQueryClient();
 
     const { mutate, isError, isPending } = useMutation({
-        mutationFn: authApi.signUp,
+        mutationFn: authAPI.signUp,
         onSuccess: () => {
             toast.success("Account created successfully");
             queryClient.invalidateQueries({ queryKey: ["userAuth"] });

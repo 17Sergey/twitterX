@@ -1,24 +1,3 @@
-export type PostType = {
-    _id: string;
-    text: string;
-    img?: string;
-    user: {
-        username: string;
-        profileImg: string;
-        fullName: string;
-    };
-    comments: Array<{
-        _id: string;
-        text: string;
-        user: {
-            username: string;
-            profileImg: string;
-            fullName: string;
-        };
-    }>;
-    likes: Array<string>;
-};
-
 export const POSTS = [
     {
         _id: "1",
