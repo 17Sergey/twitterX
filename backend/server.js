@@ -23,7 +23,7 @@ cloudinary.config({
 
 const app = express();
 
-app.use(express.json({ limit: "5mb" }));
+app.use(express.json({ limit: "5mb" })); // limit is for uplodaing images on the client
 
 app.use(express.urlencoded({ extended: true })); // to parse form data
 
@@ -39,6 +39,6 @@ app.use("/api/notifications", notificationsRoutes);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log("Running");
+    console.log(`Running on ${PORT}`);
     connectMongoDB();
 });

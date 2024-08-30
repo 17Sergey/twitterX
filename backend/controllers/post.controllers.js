@@ -10,8 +10,6 @@ export const createPost = async (req, res) => {
         let { img } = req.body;
         const userId = req.user._id.toString();
 
-        console.log(text, img);
-
         if (!text && !img) {
             return res.status(400).json({ error: "A post must have a text or an image" });
         }
