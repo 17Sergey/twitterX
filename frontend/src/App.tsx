@@ -14,10 +14,11 @@ import { authAPI } from "./api/authAPI";
 import LoadingSpinner from "./components/common/LoadingSpinner";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
 import { UserType } from "./utils/dataTypes";
+import { QUERY_KEYS } from "./utils/queryKeys";
 
 function App() {
     const { data, isLoading, isError } = useQuery<UserType>({
-        queryKey: ["userAuth"],
+        queryKey: [QUERY_KEYS.USER_AUTH],
         queryFn: authAPI.getMe,
         retry: false,
     });

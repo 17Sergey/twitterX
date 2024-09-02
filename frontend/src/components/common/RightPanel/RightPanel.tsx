@@ -2,9 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 
 import UserProfileSkeleton from "../../skeletons/UserProfileSkeleton";
 import UserProfile from "../UserProfile";
+import FollowButton from "../FollowButton";
 
 import { UserType } from "../../../utils/dataTypes";
 import { usersAPI } from "../../../api/usersAPI";
+import { QUERY_KEYS } from "../../../utils/queryKeys";
 
 export default function RightPanel() {
     const {
@@ -12,7 +14,7 @@ export default function RightPanel() {
         isLoading,
         error,
     } = useQuery<UserType[]>({
-        queryKey: ["suggestedUsers"],
+        queryKey: [QUERY_KEYS.SUGGESTED_USERS],
         queryFn: usersAPI.getSuggestedUsers,
         retry: false,
     });
@@ -38,7 +40,7 @@ export default function RightPanel() {
                         </UserProfileSkeleton>
                     </>
                 )}
-                {!isLoading && users?.length !== 0 && (
+                {!isLoading && users?.length === 0 && (
                     <p className="max-w-64">No users to follow/suggest. Congratulations! 🎉</p>
                 )}
                 {!isLoading &&
@@ -49,9 +51,10 @@ export default function RightPanel() {
                                 key={user._id}
                                 className="mb-4 last:mb-0"
                             >
-                                <button className="ml-8 btn bg-[--theme-accent] hover:bg-neutral-content text-primary-content btn-sm rounded-full">
-                                    Follow
-                                </button>
+                                <FollowButton
+                                    key={user._id}
+                                    userId={user._id}
+                                />
                             </UserProfile>
                         );
                     })}
