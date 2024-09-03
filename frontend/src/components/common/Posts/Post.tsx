@@ -54,7 +54,7 @@ export default function Post({ post }: PostProps) {
                     <div className="flex justify-between items-center gap-4 relative top-1.5">
                         <Link
                             to={`/profile/${post.user.username}`}
-                            className="flex flex-wrap items-baseline gap-4"
+                            className="flex flex-wrap items-baseline gap-2"
                         >
                             <p className="font-semibold text-base">{post.user?.fullName}</p>
                             <p className="font-normal text-sm opacity-30">@{post.user?.username}</p>
