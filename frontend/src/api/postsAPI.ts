@@ -38,8 +38,20 @@ async function createPost({ text, img }: CreatePostDataType) {
     return data;
 }
 
+async function likePost(postId: string) {
+    const res = await fetch(`/api/posts/like/${postId}`, {
+        method: "POST",
+    });
+
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    return data;
+}
+
 export const postsAPI = {
     getPosts,
     deletePost,
     createPost,
+    likePost,
 };

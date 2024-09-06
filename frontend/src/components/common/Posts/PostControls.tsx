@@ -1,24 +1,47 @@
-import { useRef, useState } from "react";
-import { PostType } from "../../../utils/dummy";
+import { useRef } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 import { FaRegComment } from "react-icons/fa";
 import { BiRepost } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import { FaRegBookmark } from "react-icons/fa6";
+
 import CommentsModal from "./CommentsModal";
 
-type PostControlsProps = Pick<PostType, "comments" | "likes">;
+import { PostType } from "../../../utils/dataTypes";
+import { postsAPI } from "../../../api/postsAPI";
+import { useUser } from "../../../hooks/useUser";
 
-export default function PostControls({ comments, likes }: PostControlsProps) {
+type PostControlsProps = Pick<PostType, "comments" | "likes" | "_id">;
+
+export default function PostControls({ comments, likes, _id: postId }: PostControlsProps) {
     const commentsCount = comments?.length || 0;
     const likesCount = likes?.length || 0;
 
-    // const isLiked = likes.includes("6658s891");
-    const [isLiked, setLiked] = useState(false);
+    const { userAuth } = useUser();
 
-    const handleLike = () => {
-        setLiked((liked) => !liked);
+    let isLiked;
+    if (userAuth) {
+        isLiked = likes.includes(userAuth?._id);
+    }
+
+    const queryClient = useQueryClient();
+
+    const { mutate: likeMutation } = useMutation({
+        mutationFn: () => postsAPI.likePost(postId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["posts"],
+            });
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
+    const handleLikePost = () => {
+        likeMutation();
     };
 
     const commentsModalRef = useRef<HTMLDialogElement>(null);
@@ -52,7 +75,7 @@ export default function PostControls({ comments, likes }: PostControlsProps) {
             </div>
             <div
                 className="flex items-center gap-2 group cursor-pointer"
-                onClick={handleLike}
+                onClick={handleLikePost}
             >
                 {!isLiked && (
                     <FaRegHeart
@@ -61,7 +84,7 @@ export default function PostControls({ comments, likes }: PostControlsProps) {
                 )}
                 {isLiked && <FaHeart className="w-4 h-4 fill-error transition-all" />}
                 <span className={`text-sm fill-neutral-content group-hover:text-error`}>
-                    {likesCount}
+                    {likesCount || null}
                 </span>
             </div>
             <FaRegBookmark className="w-4 h-4 relative top-0.5 cursor-pointer fill-neutral-content hover:fill-[--theme-accent] transition-all" />
