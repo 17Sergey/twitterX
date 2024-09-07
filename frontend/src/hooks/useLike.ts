@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 
 import { postsAPI } from "../api/postsAPI";
 import { PostType } from "../utils/dataTypes";
+import { QUERY_KEYS } from "../utils/queryKeys";
 
 export const useLike = ({ postId, activeTab }: { postId: string; activeTab: string }) => {
     const queryClient = useQueryClient();
@@ -10,7 +11,7 @@ export const useLike = ({ postId, activeTab }: { postId: string; activeTab: stri
     const { mutate: likeMutation, isPending: isLiking } = useMutation({
         mutationFn: () => postsAPI.likePost(postId),
         onSuccess: (data) => {
-            queryClient.setQueryData(["posts", activeTab], (oldData: Array<PostType>) => {
+            queryClient.setQueryData([QUERY_KEYS.POSTS, activeTab], (oldData: Array<PostType>) => {
                 return oldData.map((p) => {
                     if (p._id === postId) {
                         return { ...p, likes: data.updatedLikes };

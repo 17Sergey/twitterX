@@ -1,10 +1,12 @@
+import { useQuery } from "@tanstack/react-query";
+
 import Post from "./Post";
 import PostSkeleton from "../../skeletons/PostSkeleton";
-import { PostType } from "../../../utils/dataTypes";
-
-import { useQuery } from "@tanstack/react-query";
-import { postsAPI } from "../../../api/postsAPI";
 import PostControls from "./PostControls";
+
+import { postsAPI } from "../../../api/postsAPI";
+import { PostType } from "../../../utils/dataTypes";
+import { QUERY_KEYS } from "../../../utils/queryKeys";
 
 const getPostsEndpoint = (activeTab: string): string => {
     switch (activeTab) {
@@ -26,7 +28,7 @@ const Posts = ({ activeTab }: { activeTab: string }) => {
         isLoading,
         error,
     } = useQuery({
-        queryKey: ["posts", activeTab],
+        queryKey: [QUERY_KEYS.POSTS, activeTab],
         queryFn: () => postsAPI.getPosts(endpoint),
     });
 
