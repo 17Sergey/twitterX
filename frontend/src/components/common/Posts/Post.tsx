@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 
-import PostControls from "./PostControls";
 import LoadingSpinner from "../LoadingSpinner";
 
 import { PostType } from "../../../utils/dataTypes";
@@ -10,9 +9,10 @@ import { useUser } from "../../../hooks/useUser";
 
 type PostProps = {
     post: PostType;
+    children: React.ReactNode;
 };
 
-export default function Post({ post }: PostProps) {
+export default function Post({ post, children }: PostProps) {
     const { userAuth } = useUser();
     const { deleteMutation, isDeletePending } = useDeletePost(post);
 
@@ -68,11 +68,7 @@ export default function Post({ post }: PostProps) {
                         alt="From post"
                     />
                 )}
-                <PostControls
-                    _id={post._id}
-                    comments={post.comments}
-                    likes={post.likes}
-                />
+                {children}
             </div>
         </div>
     );

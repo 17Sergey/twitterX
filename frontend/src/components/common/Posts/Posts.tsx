@@ -4,6 +4,7 @@ import { PostType } from "../../../utils/dataTypes";
 
 import { useQuery } from "@tanstack/react-query";
 import { postsAPI } from "../../../api/postsAPI";
+import PostControls from "./PostControls";
 
 const getPostsEndpoint = (activeTab: string): string => {
     switch (activeTab) {
@@ -52,7 +53,14 @@ const Posts = ({ activeTab }: { activeTab: string }) => {
                         <Post
                             key={post._id}
                             post={post}
-                        />
+                        >
+                            <PostControls
+                                _id={post._id}
+                                comments={post.comments}
+                                likes={post.likes}
+                                activeTab={activeTab}
+                            />
+                        </Post>
                     ))}
                 </div>
             )}

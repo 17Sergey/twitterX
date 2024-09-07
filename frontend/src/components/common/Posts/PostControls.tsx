@@ -1,6 +1,4 @@
 import { useRef } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
 
 import { FaRegComment } from "react-icons/fa";
 import { BiRepost } from "react-icons/bi";
@@ -9,14 +7,22 @@ import { FaHeart } from "react-icons/fa6";
 import { FaRegBookmark } from "react-icons/fa6";
 
 import CommentsModal from "./CommentsModal";
+import LoadingSpinner from "../LoadingSpinner";
 
 import { PostType } from "../../../utils/dataTypes";
-import { postsAPI } from "../../../api/postsAPI";
 import { useUser } from "../../../hooks/useUser";
+import { useLike } from "../../../hooks/useLike";
 
-type PostControlsProps = Pick<PostType, "comments" | "likes" | "_id">;
+type PostControlsProps = {
+    activeTab: string;
+} & Pick<PostType, "comments" | "likes" | "_id">;
 
-export default function PostControls({ comments, likes, _id: postId }: PostControlsProps) {
+export default function PostControls({
+    comments,
+    likes,
+    _id: postId,
+    activeTab,
+}: PostControlsProps) {
     const commentsCount = comments?.length || 0;
     const likesCount = likes?.length || 0;
 
@@ -27,20 +33,10 @@ export default function PostControls({ comments, likes, _id: postId }: PostContr
         isLiked = likes.includes(userAuth?._id);
     }
 
-    const queryClient = useQueryClient();
+    const { likeMutation, isLiking } = useLike({ postId, activeTab });
 
-    const { mutate: likeMutation } = useMutation({
-        mutationFn: () => postsAPI.likePost(postId),
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ["posts"],
-            });
-        },
-        onError: (error) => {
-            toast.error(error.message);
-        },
-    });
     const handleLikePost = () => {
+        if (isLiking) return;
         likeMutation();
     };
 
@@ -77,15 +73,18 @@ export default function PostControls({ comments, likes, _id: postId }: PostContr
                 className="flex items-center gap-2 group cursor-pointer"
                 onClick={handleLikePost}
             >
-                {!isLiked && (
+                {!isLiked && !isLiking && (
                     <FaRegHeart
                         className={`w-4 h-4 fill-neutral-content group-hover:fill-error transition-all`}
                     />
                 )}
-                {isLiked && <FaHeart className="w-4 h-4 fill-error transition-all" />}
-                <span className={`text-sm fill-neutral-content group-hover:text-error`}>
-                    {likesCount || null}
-                </span>
+                {isLiking && <LoadingSpinner className="loading-xs scale-75" />}
+                {isLiked && !isLiking && <FaHeart className="w-4 h-4 fill-error transition-all" />}
+                {!isLiking && (
+                    <span className={`text-sm fill-neutral-content group-hover:text-error`}>
+                        {likesCount || null}
+                    </span>
+                )}
             </div>
             <FaRegBookmark className="w-4 h-4 relative top-0.5 cursor-pointer fill-neutral-content hover:fill-[--theme-accent] transition-all" />
         </div>
