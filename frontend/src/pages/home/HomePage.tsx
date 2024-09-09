@@ -22,7 +22,7 @@ function HomePage() {
                     toggleActive={() => setActiveTab("following")}
                 />
             </TabsList>
-            <CreatePost />
+            <CreatePost activeTab={activeTab} />
             <Posts activeTab={activeTab} />
         </div>
     );

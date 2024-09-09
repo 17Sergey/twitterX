@@ -5,6 +5,7 @@ export default function FollowButton({ userId }: { userId: string }) {
     const { follow, isFollowing, isFollowed } = useFollow();
 
     const handleFollow = (userId: string) => {
+        if (isFollowing) return;
         follow(userId);
     };
 

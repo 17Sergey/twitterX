@@ -1,16 +1,44 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ChangeEvent, FormEvent, useState } from "react";
+import toast from "react-hot-toast";
 
-export default function AddCommentForm() {
+import { postsAPI } from "../../../api/postsAPI";
+import { PostType } from "../../../utils/dataTypes";
+import { QUERY_KEYS } from "../../../utils/queryKeys";
+
+type AddCommentFormProps = Pick<PostType, "_id">;
+
+export default function AddCommentForm({ _id: postId }: AddCommentFormProps) {
     const [text, setText] = useState("");
     const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setText(e.target.value);
     };
 
-    const isPending = false;
-    const isError = false;
+    const queryClient = useQueryClient();
+
+    const { mutate: commentPost, isPending: isCommenting } = useMutation({
+        mutationFn: () => postsAPI.commentPost({ text, _id: postId }),
+        onSuccess: (data) => {
+            queryClient.setQueryData([QUERY_KEYS.POSTS], (oldData: Array<PostType>) => {
+                return oldData.map((p) => {
+                    if (p._id === postId) {
+                        return { ...p, comments: data.comments };
+                    }
+                    return p;
+                });
+            });
+            setText("");
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (isCommenting) return;
+        commentPost();
     };
 
     return (
@@ -24,14 +52,13 @@ export default function AddCommentForm() {
                         onChange={handleTextChange}
                     />
                     <button className="btn btn-primary text-[--theme-accent] btn-sm rounded-full px-4 self-end md:self-center">
-                        {isPending ? (
+                        {isCommenting ? (
                             <span className="loading loading-spinner loading-xs"></span>
                         ) : (
                             "Comment"
                         )}
                     </button>
                 </div>
-                {isError && <p>An error occured</p>}
             </form>
         </div>
     );

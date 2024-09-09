@@ -1,3 +1,5 @@
+import { PostType } from "../utils/dataTypes";
+
 async function getPosts(endpoint: string) {
     const res = await fetch(endpoint);
 
@@ -49,9 +51,27 @@ async function likePost(postId: string) {
     return data;
 }
 
+type CommentPostDataType = { text: string } & Pick<PostType, "_id">;
+
+async function commentPost({ text, _id: postId }: CommentPostDataType) {
+    const res = await fetch(`/api/posts/comment/${postId}`, {
+        method: "POST",
+        body: JSON.stringify({ text }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    return data as PostType;
+}
+
 export const postsAPI = {
     getPosts,
     deletePost,
     createPost,
     likePost,
+    commentPost,
 };

@@ -26,6 +26,7 @@ export default function Comment({ comment }: CommentProps) {
                     <img
                         src={comment.user?.profileImg || "/avatar-placeholder.png"}
                         alt="Avatar"
+                        className="rounded-full"
                     />
                 </Link>
                 <div>
@@ -36,11 +37,7 @@ export default function Comment({ comment }: CommentProps) {
                         <p className="font-semibold">{comment.user?.fullName}</p>
                         <p className="font-normal text-sm opacity-30">@{comment.user?.username}</p>
                     </Link>
-                    <p className="mt-2 hidden md:block">
-                        {comment.text} Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Distinctio a amet consequuntur aliquid unde eaque corporis, quisquam
-                        exercitationem non nihil!
-                    </p>
+                    <p className="mt-2 hidden md:block">{comment.text}</p>
                 </div>
             </div>
             <p className="mt-2 md:hidden">

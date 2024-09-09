@@ -1,15 +1,16 @@
 import { RefObject, useRef } from "react";
-import { PostType } from "../../../utils/dummy";
+
 import Comment from "./Comment";
 import AddCommentForm from "./AddCommentForm";
 
 import { useOnClickOutside } from "usehooks-ts";
+import { PostType } from "../../../utils/dataTypes";
 
 type PostControlsProps = {
     modalRef: RefObject<HTMLDialogElement>;
-} & Pick<PostType, "comments">;
+} & Pick<PostType, "comments" | "_id">;
 
-export default function CommentsModal({ modalRef, comments }: PostControlsProps) {
+export default function CommentsModal({ modalRef, comments, _id: postId }: PostControlsProps) {
     const handleClickOutside = () => {
         if (modalRef.current) {
             modalRef.current.close();
@@ -35,13 +36,15 @@ export default function CommentsModal({ modalRef, comments }: PostControlsProps)
                     </button>
                 </form>
                 <h3 className="font-bold text-lg mb-8">COMMENTS</h3>
+
                 {comments.map((comment) => (
                     <Comment
                         key={comment._id}
                         comment={comment}
                     />
                 ))}
-                <AddCommentForm />
+
+                <AddCommentForm _id={postId} />
             </div>
         </dialog>
     );

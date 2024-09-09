@@ -63,6 +63,7 @@ export default function PostControls({
                 <CommentsModal
                     modalRef={commentsModalRef}
                     comments={comments}
+                    _id={postId}
                 />
             </div>
             <div className="flex items-center gap-2 cursor-pointer">

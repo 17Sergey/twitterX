@@ -1,14 +1,16 @@
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { CiImageOn } from "react-icons/ci";
 import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoCloseSharp } from "react-icons/io5";
-import toast from "react-hot-toast";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+
 import { UserType } from "../../utils/dataTypes";
 import { postsAPI } from "../../api/postsAPI";
+import { QUERY_KEYS } from "../../utils/queryKeys";
 
-function CreatePost() {
+function CreatePost({ activeTab }: { activeTab: string }) {
     const [text, setText] = useState("");
     const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setText(e.target.value);
@@ -41,12 +43,12 @@ function CreatePost() {
 
     const queryClient = useQueryClient();
 
-    const { mutate: createMutation, isPending } = useMutation({
+    const { mutate: createPost, isPending: isPosting } = useMutation({
         mutationFn: () => postsAPI.createPost({ text, img }),
         onSuccess: () => {
             toast.success("Post created successfully");
             queryClient.invalidateQueries({
-                queryKey: ["posts"],
+                queryKey: [QUERY_KEYS.POSTS, activeTab],
             });
 
             setText("");
@@ -59,7 +61,9 @@ function CreatePost() {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        createMutation();
+
+        if (isPosting) return;
+        createPost();
     };
 
     return (
@@ -113,7 +117,7 @@ function CreatePost() {
                             <BsEmojiSmileFill className="w-6 h-7 fill-primary" />
                         </div>
                         <button className="btn btn-primary text-[--theme-accent] btn-sm rounded-full px-4">
-                            {isPending ? "Posting..." : "Post"}
+                            {isPosting ? "Posting..." : "Post"}
                         </button>
                     </div>
                 </div>
