@@ -139,12 +139,15 @@ export const likeUnlikePost = async (req, res) => {
                 }
             );
 
-            const notification = new Notification({
-                type: "like",
-                from: userId,
-                to: post.user,
-            });
-            await notification.save();
+            // Do not send notifications when we like our post
+            if (post.user._id.toString() !== userId.toString()) {
+                const notification = new Notification({
+                    type: "like",
+                    from: userId,
+                    to: post.user,
+                });
+                await notification.save();
+            }
 
             const updatedLikes = post.likes;
 

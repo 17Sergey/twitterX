@@ -1,33 +1,50 @@
 import { IoSettingsOutline } from "react-icons/io5";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 import Notification from "./Notification";
 
-export default function Notifications() {
-    const isLoading = true;
-    const notifications = [
-        {
-            _id: "1",
-            from: {
-                _id: "1",
-                username: "johndoe",
-                profileImg: "/avatars/boy2.png",
-            },
-            type: "follow",
-        },
-        {
-            _id: "2",
-            from: {
-                _id: "2",
-                username: "janedoe",
-                profileImg: "/avatars/girl1.png",
-            },
-            type: "like",
-        },
-    ];
+import { QUERY_KEYS } from "../../utils/queryKeys";
+import { NotificationType } from "../../utils/dataTypes";
+import { notificationsAPI } from "../../api/notificationsAPI";
 
-    const deleteNotifications = () => {
-        alert("All notifications deleted");
+export default function Notifications() {
+    const {
+        data: notifications,
+        isLoading,
+        error,
+    } = useQuery({
+        queryKey: [QUERY_KEYS.NOTIFICATIONS],
+        queryFn: notificationsAPI.getNotifications,
+        // To refetch every time we open the page
+        staleTime: 0,
+        gcTime: 0,
+    });
+
+    const queryClient = useQueryClient();
+
+    const { mutate: deleteNotifications, isPending: isDeleting } = useMutation({
+        mutationFn: notificationsAPI.deleteNotifications,
+        onSuccess: () => {
+            toast.success("All notifications deleted");
+
+            // No data anymore
+            queryClient.setQueryData([QUERY_KEYS.NOTIFICATIONS], []);
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
+
+    const handleDeleteNotifications = () => {
+        deleteNotifications();
+
+        // Hide dropdown
+        const elem = document.activeElement;
+        if (elem) {
+            (elem as HTMLElement).blur();
+        }
     };
 
     return (
@@ -47,13 +64,16 @@ export default function Notifications() {
                         className="dropdown-content menu bg-base-200 rounded-box z-[1] w-52 p-2 shadow"
                     >
                         <li>
-                            <a onClick={deleteNotifications}>Delete all notifications</a>
+                            <button onClick={handleDeleteNotifications}>
+                                Delete all notifications
+                            </button>
                         </li>
                     </ul>
                 </div>
             </div>
             <div>
-                {isLoading && (
+                {error && <p className="text-error">{error.message}</p>}
+                {(isLoading || isDeleting) && (
                     <div className="mt-4 flex justify-center h-full items-center">
                         <LoadingSpinner className="loading-lg" />
                     </div>
@@ -61,9 +81,14 @@ export default function Notifications() {
                 {notifications?.length === 0 && (
                     <div className="text-center p-4 font-bold">No notifications 🤔</div>
                 )}
-                {notifications.map((notification) => (
-                    <Notification notification={notification} />
-                ))}
+                {!isLoading &&
+                    !isDeleting &&
+                    notifications.map((notification: NotificationType) => (
+                        <Notification
+                            key={notification._id}
+                            notification={notification}
+                        />
+                    ))}
             </div>
         </div>
     );

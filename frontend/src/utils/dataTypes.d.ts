@@ -32,3 +32,13 @@ export type PostType = {
     }>;
     likes: Array<string>;
 };
+
+export type NotificationType = {
+    _id: string;
+    from: {
+        _id: string;
+        username: string;
+        profileImg: string;
+    };
+    type: string;
+};

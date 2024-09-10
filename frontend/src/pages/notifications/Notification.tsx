@@ -1,17 +1,10 @@
 import { FaUser } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { NotificationType } from "../../utils/dataTypes";
 
 type NotificationProps = {
-    notification: {
-        _id: string;
-        from: {
-            _id: string;
-            username: string;
-            profileImg: string;
-        };
-        type: string;
-    };
+    notification: NotificationType;
 };
 
 export default function Notification({ notification }: NotificationProps) {
@@ -20,7 +13,7 @@ export default function Notification({ notification }: NotificationProps) {
             <div className="flex gap-2 items-center">
                 <Link to={`/profile/${notification.from.username}`}>
                     <img
-                        className="w-10 h-10 md:w-12 md:h-12"
+                        className="w-10 h-10 md:w-12 md:h-12 rounded-full"
                         src={notification.from.profileImg || "/avatar-placeholder.png"}
                         alt="User avatar"
                     />
@@ -36,8 +29,8 @@ export default function Notification({ notification }: NotificationProps) {
                 </p>
             </div>
             <div>
-                {notification.type === "like" && <FaUser className="w-6 h-6 fill-primary" />}
-                {notification.type === "follow" && <FaHeart className="w-6 h-6 fill-error" />}
+                {notification.type === "like" && <FaHeart className="w-6 h-6 fill-error" />}
+                {notification.type === "follow" && <FaUser className="w-6 h-6 fill-primary" />}
             </div>
         </div>
     );
