@@ -1,16 +1,16 @@
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { CiImageOn } from "react-icons/ci";
 import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoCloseSharp } from "react-icons/io5";
 
-import { UserType } from "../../utils/dataTypes";
 import { postsAPI } from "../../api/postsAPI";
 import { QUERY_KEYS } from "../../utils/queryKeys";
+import { useUser } from "../../hooks/useUser";
 
-function CreatePost({ activeTab }: { activeTab: string }) {
+function CreatePost() {
     const [text, setText] = useState("");
     const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setText(e.target.value);
@@ -39,7 +39,7 @@ function CreatePost({ activeTab }: { activeTab: string }) {
         }
     };
 
-    const { data: userAuth } = useQuery<UserType>({ queryKey: ["userAuth"] });
+    const { userAuth } = useUser();
 
     const queryClient = useQueryClient();
 
@@ -48,7 +48,7 @@ function CreatePost({ activeTab }: { activeTab: string }) {
         onSuccess: () => {
             toast.success("Post created successfully");
             queryClient.invalidateQueries({
-                queryKey: [QUERY_KEYS.POSTS, activeTab],
+                queryKey: [QUERY_KEYS.POSTS],
             });
 
             setText("");

@@ -22,7 +22,7 @@ export default function AddCommentForm({ _id: postId }: AddCommentFormProps) {
             queryClient.setQueryData([QUERY_KEYS.POSTS], (oldData: Array<PostType>) => {
                 return oldData.map((p) => {
                     if (p._id === postId) {
-                        return { ...p, comments: data.comments };
+                        return data;
                     }
                     return p;
                 });

@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 import Post from "./Post";
 import PostSkeleton from "../../skeletons/PostSkeleton";
-import PostControls from "./PostControls";
 
 import { postsAPI } from "../../../api/postsAPI";
 import { PostType } from "../../../utils/dataTypes";
@@ -27,10 +27,15 @@ const Posts = ({ activeTab }: { activeTab: string }) => {
         data: posts,
         isLoading,
         error,
+        refetch,
     } = useQuery({
-        queryKey: [QUERY_KEYS.POSTS, activeTab],
+        queryKey: [QUERY_KEYS.POSTS],
         queryFn: () => postsAPI.getPosts(endpoint),
     });
+
+    useEffect(() => {
+        refetch();
+    }, [activeTab, refetch]);
 
     return (
         <>
@@ -55,14 +60,7 @@ const Posts = ({ activeTab }: { activeTab: string }) => {
                         <Post
                             key={post._id}
                             post={post}
-                        >
-                            <PostControls
-                                _id={post._id}
-                                comments={post.comments}
-                                likes={post.likes}
-                                activeTab={activeTab}
-                            />
-                        </Post>
+                        />
                     ))}
                 </div>
             )}

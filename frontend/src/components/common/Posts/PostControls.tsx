@@ -13,16 +13,9 @@ import { PostType } from "../../../utils/dataTypes";
 import { useUser } from "../../../hooks/useUser";
 import { useLike } from "../../../hooks/useLike";
 
-type PostControlsProps = {
-    activeTab: string;
-} & Pick<PostType, "comments" | "likes" | "_id">;
+type PostControlsProps = Pick<PostType, "comments" | "likes" | "_id">;
 
-export default function PostControls({
-    comments,
-    likes,
-    _id: postId,
-    activeTab,
-}: PostControlsProps) {
+export default function PostControls({ comments, likes, _id: postId }: PostControlsProps) {
     const commentsCount = comments?.length || 0;
     const likesCount = likes?.length || 0;
 
@@ -33,7 +26,7 @@ export default function PostControls({
         isLiked = likes.includes(userAuth?._id);
     }
 
-    const { likeMutation, isLiking } = useLike({ postId, activeTab });
+    const { likeMutation, isLiking } = useLike(postId);
 
     const handleLikePost = () => {
         if (isLiking) return;

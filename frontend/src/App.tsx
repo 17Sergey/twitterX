@@ -24,10 +24,8 @@ function App() {
     });
 
     // If we log out and invalidate the query, then the retrieved data is an empty object {} and it still is a thuthy value.
-    // So this thick with null helps us.
+    // So this trick with null helps us.
     const userAuth = isError ? null : data;
-
-    console.log(userAuth);
 
     if (isLoading)
         return (

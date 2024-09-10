@@ -85,6 +85,12 @@ export const commentPost = async (req, res) => {
         post.comments.push(comment);
         await post.save();
 
+        const newPost = await post.populate({
+            path: "comments.user",
+            select: "-password",
+        });
+        console.log(newPost);
+
         res.status(200).json(post);
     } catch (error) {
         console.error(`Error in commentPost controller: ${error.message}`);

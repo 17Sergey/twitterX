@@ -1,11 +1,17 @@
-import Posts from "../../components/common/Posts/Posts";
-import CreatePost from "./CreatePost";
-import TabsList from "../../components/common/Tabs/TabsList";
-import Tab from "../../components/common/Tabs/Tab";
 import { useState } from "react";
+
+import Posts from "../../components/common/Posts/Posts";
+import Tab from "../../components/common/Tabs/Tab";
+import TabsList from "../../components/common/Tabs/TabsList";
+import CreatePost from "./CreatePost";
 
 function HomePage() {
     const [activeTab, setActiveTab] = useState("forYou");
+
+    const handleToggleTab = (tab: string) => {
+        setActiveTab(tab);
+    };
+
     return (
         <div className="min-h-screen">
             <TabsList>
@@ -13,16 +19,16 @@ function HomePage() {
                     activeTab={activeTab}
                     name={"forYou"}
                     text="For you"
-                    toggleActive={() => setActiveTab("forYou")}
+                    toggleActive={() => handleToggleTab("forYou")}
                 />
                 <Tab
                     activeTab={activeTab}
                     name={"following"}
                     text="Following"
-                    toggleActive={() => setActiveTab("following")}
+                    toggleActive={() => handleToggleTab("following")}
                 />
             </TabsList>
-            <CreatePost activeTab={activeTab} />
+            <CreatePost />
             <Posts activeTab={activeTab} />
         </div>
     );

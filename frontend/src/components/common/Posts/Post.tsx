@@ -6,13 +6,13 @@ import LoadingSpinner from "../LoadingSpinner";
 import { PostType } from "../../../utils/dataTypes";
 import { useDeletePost } from "../../../hooks/useDeletePost";
 import { useUser } from "../../../hooks/useUser";
+import PostControls from "./PostControls";
 
 type PostProps = {
     post: PostType;
-    children: React.ReactNode;
 };
 
-export default function Post({ post, children }: PostProps) {
+export default function Post({ post }: PostProps) {
     const { userAuth } = useUser();
     const { deleteMutation, isDeletePending } = useDeletePost(post);
 
@@ -68,7 +68,11 @@ export default function Post({ post, children }: PostProps) {
                         alt="From post"
                     />
                 )}
-                {children}
+                <PostControls
+                    _id={post._id}
+                    comments={post.comments}
+                    likes={post.likes}
+                />
             </div>
         </div>
     );
