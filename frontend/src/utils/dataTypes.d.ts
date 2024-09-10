@@ -11,6 +11,7 @@ export type UserType = {
 };
 
 export type PostType = {
+    createdAt: string;
     _id: string;
     text: string;
     img?: string;

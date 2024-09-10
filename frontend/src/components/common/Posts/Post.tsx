@@ -7,6 +7,7 @@ import { PostType } from "../../../utils/dataTypes";
 import { useDeletePost } from "../../../hooks/useDeletePost";
 import { useUser } from "../../../hooks/useUser";
 import PostControls from "./PostControls";
+import { formatPostDate } from "../../../utils/dateFunctions";
 
 type PostProps = {
     post: PostType;
@@ -16,7 +17,7 @@ export default function Post({ post }: PostProps) {
     const { userAuth } = useUser();
     const { deleteMutation, isDeletePending } = useDeletePost(post);
 
-    const formattedDate = "1h"; // TODO
+    const formattedDate = formatPostDate(post.createdAt);
 
     const isMyPost = post.user?._id === userAuth?._id;
 
