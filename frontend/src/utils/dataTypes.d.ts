@@ -16,11 +16,11 @@ export type UserProfileType = {
     _id: string;
     fullName: string;
     username: string;
-    profileImg: string;
-    coverImg: string;
+    profileImg?: string | null;
+    coverImg?: string | null;
     email: string;
-    bio: string;
-    link: string;
+    bio?: string;
+    link?: string;
     following: Array<string>;
     followers: Array<string>;
     posts: number;

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 
 import ProfileHeaderSkeleton from "../../components/skeletons/ProfileHeaderSkeleton";
-import ProfileHeader from "./ProfileHeader";
+import ProfileHeader from "./ProfileHeader/ProfileHeader";
 import ProfileNotFound from "./ProfileNotFound";
 import ProfileMenu from "./ProfileMenu";
 import ProfilePosts from "./ProfilePosts";

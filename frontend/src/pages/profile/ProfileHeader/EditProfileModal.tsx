@@ -1,15 +1,28 @@
-import { ChangeEvent, FormEvent, useRef, useState } from "react";
-import { UserProfileType } from "../../utils/dataTypes";
+import { ChangeEvent, Dispatch, FormEvent, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import ProfileImg from "./ProfileImg";
+import ProfileCoverImg from "./ProfileCoverImg";
+import LoadingSpinner from "../../../components/common/LoadingSpinner";
+
+import { UpdateProfileDataType, usersAPI } from "../../../api/usersAPI";
+import { UserProfileType } from "../../../utils/dataTypes";
+import { QUERY_KEYS } from "../../../utils/queryKeys";
 
 type EditProfileModalProps = {
-    // coverImg: string | null;
-    // profileImg: string | null;
+    coverImg: string | null;
+    profileImg: string | null;
+    setCoverImg: Dispatch<React.SetStateAction<string | null>>;
+    setProfileImg: Dispatch<React.SetStateAction<string | null>>;
     userProfile: UserProfileType;
 };
 
 export default function EditProfileModal({
-    // coverImg,
-    // profileImg,
+    coverImg,
+    profileImg,
+    setCoverImg,
+    setProfileImg,
     userProfile,
 }: EditProfileModalProps) {
     const [formData, setFormData] = useState({
@@ -34,9 +47,24 @@ export default function EditProfileModal({
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const queryClient = useQueryClient();
+
+    const { mutate: updateProfile, isPending } = useMutation({
+        mutationFn: (data: UpdateProfileDataType) => usersAPI.updateProfile(data),
+        onSuccess: (data) => {
+            toast.success("Profile updated successfully");
+            queryClient.setQueryData([QUERY_KEYS.PROFILE], data);
+        },
+        onError: (error) => {
+            toast.error(error.message);
+        },
+    });
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        alert("Profile updated successfully");
+
+        const data = { ...formData, coverImg, profileImg };
+        updateProfile(data);
     };
 
     return (
@@ -124,24 +152,23 @@ export default function EditProfileModal({
                             onChange={handleInputChange}
                         />
                         <div>
-                            {/* <p className="mb-4">Profile image: </p>
-                            <img
-                                className="w-32 h-32 object-cover rounded-full"
-                                src={
-                                    profileImg ||
-                                    userProfile?.profileImg ||
-                                    "/avatar-placeholder.png"
-                                }
+                            <p className="mb-4">Profile image: </p>
+                            <ProfileImg
+                                isMyProfile={true}
+                                userImg={userProfile?.profileImg}
+                                uploadedImg={profileImg}
+                                setUploadedImg={setProfileImg}
                             />
                             <p className="mt-4 mb-4">Cover image: </p>
-                            <img
-                                className="w-full h-64 object-cover"
-                                src={coverImg || userProfile?.coverImg || "/cover.png"}
-                                alt=""
-                            /> */}
+                            <ProfileCoverImg
+                                isMyProfile={true}
+                                userImg={userProfile?.coverImg}
+                                uploadedImg={coverImg}
+                                setUploadedImg={setCoverImg}
+                            />
                         </div>
                         <button className="btn btn-primary rounded-full btn-sm mt-2 md:mt-0 min-h-11 text-[--theme-accent]">
-                            Update
+                            {isPending ? <LoadingSpinner className="loading-sm" /> : "Update"}
                         </button>
                     </form>
                 </div>

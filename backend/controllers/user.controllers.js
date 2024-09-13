@@ -127,13 +127,16 @@ export const updateUser = async (req, res) => {
         let { profileImg, coverImg } = req.body;
 
         const userId = req.user._id;
+        let user = await User.findById(userId);
 
         if ((currentPassword && !newPassword) || (!currentPassword && newPassword)) {
             return res.status(400).json({ error: "Please provide both current and new passwords" });
         }
 
         if (currentPassword && newPassword) {
-            const isMatch = await bcrypt.compare(currentPassword, user?.password || "");
+            const isMatch = await bcrypt.compare(currentPassword, user.password);
+            console.log(currentPassword, user.password);
+
             if (!isMatch) return res.status(400).json({ error: "Current password is incorrect" });
 
             if (newPassword.length < 6) {
@@ -165,6 +168,8 @@ export const updateUser = async (req, res) => {
         }
 
         user.fullName = fullName || user.fullName;
+
+        // TODO: Check unique
         user.email = email || user.email;
         user.username = username || user.username;
         user.bio = bio || user.bio;
