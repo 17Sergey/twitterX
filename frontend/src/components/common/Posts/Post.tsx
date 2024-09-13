@@ -27,7 +27,7 @@ export default function Post({ post }: PostProps) {
 
     return (
         <div className="border-b border-1 border-neutral pt-4 pb-4">
-            <div className="flex gap-4 px-4">
+            <div className="flex gap-2 px-4">
                 <Link
                     className="w-10 h-10 flex-shrink-0"
                     to={`/profile/${post.user.username}`}

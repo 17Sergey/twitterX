@@ -8,6 +8,7 @@ export type UserType = {
     link: string;
     following: Array<string>;
     followers: Array<string>;
+    createdAt: string;
 };
 
 export type PostType = {

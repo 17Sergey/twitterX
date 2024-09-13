@@ -1,39 +1,43 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import Post from "./Post";
 import PostSkeleton from "../../skeletons/PostSkeleton";
 
 import { postsAPI } from "../../../api/postsAPI";
-import { PostType, UserType } from "../../../utils/dataTypes";
+import { PostType } from "../../../utils/dataTypes";
 import { QUERY_KEYS } from "../../../utils/queryKeys";
-import { useUser } from "../../../hooks/useUser";
 
-const getPostsEndpoint = (activeTab: string, user: UserType | undefined): string => {
-    // debugger;
+const getPostsEndpoint = (
+    activeTab: string,
+    username?: string | undefined,
+    userId?: string | undefined
+): string => {
     switch (activeTab) {
         case "forYou":
             return "/api/posts/all";
         case "following":
             return "/api/posts/following";
-        case "liked":
-            return `/api/posts/user/${user?.username}`;
         case "userPosts":
-            return `/api/posts/liked/${user?._id}`;
+            return `/api/posts/user/${username || ""}`;
+        case "liked":
+            return `/api/posts/liked/${userId || ""}`;
 
         default:
             return "/api/posts/all";
     }
 };
 
-const Posts = ({ activeTab }: { activeTab: string }) => {
-    const { userAuth } = useUser();
+const Posts = ({ activeTab, userId }: { activeTab: string; userId?: string }) => {
+    const { username } = useParams();
 
-    const endpoint = getPostsEndpoint(activeTab, userAuth);
+    const endpoint = getPostsEndpoint(activeTab, username, userId);
 
     const {
         data: posts,
         isLoading,
+        isRefetching,
         error,
         refetch,
     } = useQuery({
@@ -47,22 +51,22 @@ const Posts = ({ activeTab }: { activeTab: string }) => {
 
     return (
         <>
-            {isLoading && (
+            {(isLoading || isRefetching) && (
                 <div className="flex flex-col justify-center">
                     <PostSkeleton />
                     <PostSkeleton />
                     <PostSkeleton />
                 </div>
             )}
-            {!isLoading && posts?.length === 0 && (
-                <p className="text-center my-4">No posts in this tab. Switch 👻</p>
+            {!(isLoading || isRefetching) && posts?.length === 0 && (
+                <p className="text-center my-8 min-h-20">No posts in this tab. Switch 👻</p>
             )}
             {error && (
                 <p className="text-center text-error-content my-4">
                     Sorry, it looks like an error occured: {error.message}
                 </p>
             )}
-            {!isLoading && posts && (
+            {!(isLoading || isRefetching) && posts && (
                 <div>
                     {posts.map((post: PostType) => (
                         <Post

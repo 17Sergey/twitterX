@@ -3,8 +3,9 @@ import { useState } from "react";
 import TabsList from "../../components/common/Tabs/TabsList";
 import Tab from "../../components/common/Tabs/Tab";
 import Posts from "../../components/common/Posts/Posts";
+import { UserType } from "../../utils/dataTypes";
 
-export default function ProfilePosts() {
+export default function ProfilePosts({ userProfile }: { userProfile: UserType }) {
     const [activeTab, setActiveTab] = useState("userPosts");
     return (
         <>
@@ -17,12 +18,15 @@ export default function ProfilePosts() {
                 />
                 <Tab
                     activeTab={activeTab}
-                    name={"likes"}
+                    name={"liked"}
                     text="Likes"
-                    toggleActive={() => setActiveTab("likes")}
+                    toggleActive={() => setActiveTab("liked")}
                 />
             </TabsList>
-            <Posts activeTab={activeTab} />
+            <Posts
+                activeTab={activeTab}
+                userId={userProfile._id}
+            />
         </>
     );
 }

@@ -2,8 +2,11 @@ import { FaLink } from "react-icons/fa";
 import { IoCalendarOutline } from "react-icons/io5";
 
 import { UserType } from "../../utils/dataTypes";
+import { formatMemberSinceDate } from "../../utils/dateFunctions";
 
 export default function ProfileInfo({ userProfile }: { userProfile: UserType }) {
+    const memberSinceDate = formatMemberSinceDate(userProfile.createdAt);
+
     return (
         <div className="md:p-4 pt-0 -mt-10">
             <div>
@@ -27,7 +30,7 @@ export default function ProfileInfo({ userProfile }: { userProfile: UserType }) 
                 )}
                 <div className="flex gap-2 items-center">
                     <IoCalendarOutline className="w-4 h-4 text-slate-500" />
-                    <span className="text-sm text-slate-500">Joined July 2021</span>
+                    <span className="text-sm text-slate-500">{memberSinceDate}</span>
                 </div>
             </div>
             <div className="flex gap-2">

@@ -22,7 +22,7 @@ export default function ProfilePage() {
                 <>
                     <ProfileMenu userProfile={userProfile} />
                     <ProfileHeader userProfile={userProfile} />
-                    <ProfilePosts />
+                    <ProfilePosts userProfile={userProfile} />
                 </>
             )}
         </div>
