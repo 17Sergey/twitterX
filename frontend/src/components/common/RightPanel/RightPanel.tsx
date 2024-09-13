@@ -44,7 +44,8 @@ export default function RightPanel() {
                     <p className="max-w-64">No users to follow/suggest. Congratulations! 🎉</p>
                 )}
                 {!isLoading &&
-                    users?.map((user) => {
+                    users &&
+                    users.map((user) => {
                         return (
                             <UserProfile
                                 {...user}

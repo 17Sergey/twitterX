@@ -1,22 +1,13 @@
 import React, { ChangeEvent, Dispatch, FormEvent, useRef, useState } from "react";
+
 import { MdEdit } from "react-icons/md";
+
 import EditProfileModal from "./EditProfileModal";
-import { FaLink } from "react-icons/fa";
-import { IoCalendarOutline } from "react-icons/io5";
 
-export default function ProfileHeader() {
-    const user = {
-        _id: "1",
-        fullName: "John Doe",
-        username: "johndoe",
-        profileImg: "/avatars/boy2.png",
-        coverImg: "/cover.png",
-        bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        link: "https://youtube.com/@asaprogrammer_",
-        following: ["1", "2", "3"],
-        followers: ["1", "2", "3"],
-    };
+import { UserType } from "../../utils/dataTypes";
+import ProfileInfo from "./ProfileInfo";
 
+export default function ProfileHeader({ userProfile }: { userProfile: UserType }) {
     const isMyProfile = true;
 
     const isFollowedByMe = true;
@@ -58,7 +49,7 @@ export default function ProfileHeader() {
             <div className="relative group">
                 <img
                     className="w-full h-64 object-cover"
-                    src={coverImg || user?.coverImg || "/cover.png"}
+                    src={coverImg || userProfile?.coverImg || "/cover.png"}
                     alt=""
                 />
                 {isMyProfile && (
@@ -83,7 +74,7 @@ export default function ProfileHeader() {
                 <div className="relative group -translate-y-1/2">
                     <img
                         className="w-32 h-32 object-cover rounded-full"
-                        src={profileImg || user?.profileImg || "./avatar-placeholder.png"}
+                        src={profileImg || userProfile?.profileImg || "/avatar-placeholder.png"}
                     />
                     {isMyProfile && (
                         <form onSubmit={handleSubmit}>
@@ -115,40 +106,7 @@ export default function ProfileHeader() {
                     </button>
                 )}
             </div>
-            <div className="md:p-4 pt-0 -mt-4">
-                <div>
-                    <p className="font-bold text-lg">{user?.fullName}</p>
-                    <p className="text-sm text-slate-500">@{user?.username}</p>
-                    <p className="text-sm my-1">{user?.bio}</p>
-                </div>
-                <div className="my-4 flex flex-col items-start md:flex-row md:items-center gap-4">
-                    <div className="flex flex-wrap gap-2 items-center">
-                        <FaLink className="w-3 h-3 fill-slate-500" />
-                        <a
-                            href="https://youtube.com/@asaprogrammer_"
-                            target="_blank"
-                            rel="noreferrer"
-                            className="text-sm text-blue-500 hover:underline"
-                        >
-                            {user.link}
-                        </a>
-                    </div>
-                    <div className="flex gap-2 items-center">
-                        <IoCalendarOutline className="w-4 h-4 text-slate-500" />
-                        <span className="text-sm text-slate-500">Joined July 2021</span>
-                    </div>
-                </div>
-                <div className="flex gap-2">
-                    <p className="text-sm font-light">
-                        <span className="font-bold mr-1">{user.following?.length || 0}</span>
-                        Following
-                    </p>
-                    <p className="text-sm font-light">
-                        <span className="font-bold mr-1">{user.followers?.length || 0}</span>
-                        Followers
-                    </p>
-                </div>
-            </div>
+            <ProfileInfo userProfile={userProfile} />
         </div>
     );
 }

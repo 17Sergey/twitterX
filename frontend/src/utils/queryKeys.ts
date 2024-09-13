@@ -3,4 +3,5 @@ export const QUERY_KEYS = {
     USER_AUTH: "userAuth",
     POSTS: "posts",
     NOTIFICATIONS: "notifications",
+    PROFILE: "profile",
 };

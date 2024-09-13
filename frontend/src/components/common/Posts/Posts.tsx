@@ -5,15 +5,21 @@ import Post from "./Post";
 import PostSkeleton from "../../skeletons/PostSkeleton";
 
 import { postsAPI } from "../../../api/postsAPI";
-import { PostType } from "../../../utils/dataTypes";
+import { PostType, UserType } from "../../../utils/dataTypes";
 import { QUERY_KEYS } from "../../../utils/queryKeys";
+import { useUser } from "../../../hooks/useUser";
 
-const getPostsEndpoint = (activeTab: string): string => {
+const getPostsEndpoint = (activeTab: string, user: UserType | undefined): string => {
+    // debugger;
     switch (activeTab) {
         case "forYou":
             return "/api/posts/all";
         case "following":
             return "/api/posts/following";
+        case "liked":
+            return `/api/posts/user/${user?.username}`;
+        case "userPosts":
+            return `/api/posts/liked/${user?._id}`;
 
         default:
             return "/api/posts/all";
@@ -21,7 +27,9 @@ const getPostsEndpoint = (activeTab: string): string => {
 };
 
 const Posts = ({ activeTab }: { activeTab: string }) => {
-    const endpoint = getPostsEndpoint(activeTab);
+    const { userAuth } = useUser();
+
+    const endpoint = getPostsEndpoint(activeTab, userAuth);
 
     const {
         data: posts,

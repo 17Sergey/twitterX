@@ -13,7 +13,10 @@ export default function UserProfile({
 }: UserProfileProps) {
     return (
         <div className={`flex justify-between items-center ${className}`}>
-            <Link to={`/profile/${username}`}>
+            <Link
+                to={`/profile/${username}`}
+                className="cursor-pointer"
+            >
                 <div className="flex items-center gap-4">
                     <img
                         className="w-10 h-10 rounded-full"
