@@ -1,22 +1,30 @@
 import React, { ChangeEvent, Dispatch, FormEvent, useRef, useState } from "react";
-
 import { MdEdit } from "react-icons/md";
 
 import EditProfileModal from "./EditProfileModal";
-
-import { UserType } from "../../utils/dataTypes";
 import ProfileInfo from "./ProfileInfo";
+import LoadingSpinner from "../../components/common/LoadingSpinner";
+import ProfileImage from "./ImageUploader";
 
-export default function ProfileHeader({ userProfile }: { userProfile: UserType }) {
-    const isMyProfile = true;
+import { UserProfileType } from "../../utils/dataTypes";
+import { useUser } from "../../hooks/useUser";
+import { useFollow } from "../../hooks/useFollow";
 
-    const isFollowedByMe = true;
+export default function ProfileHeader({ userProfile }: { userProfile: UserProfileType }) {
+    const { userAuth } = useUser();
+
+    const isMyProfile = userAuth?._id === userProfile._id;
+    const isFollowedByMe = userAuth?.following.includes(userProfile._id);
+
+    const { follow, isFollowing } = useFollow(userProfile._id);
+
+    const handleFollow = () => {
+        follow();
+    };
 
     const [coverImg, setCoverImg] = useState<string | null>(null);
-    const [profileImg, setProfileImg] = useState<string | null>(null);
 
     const coverImgRef = useRef<HTMLInputElement>(null);
-    const profileImgRef = useRef<HTMLInputElement>(null);
 
     const triggerImageChange = (imageRef: typeof coverImgRef) => {
         if (imageRef.current) {
@@ -47,6 +55,10 @@ export default function ProfileHeader({ userProfile }: { userProfile: UserType }
     return (
         <div>
             <div className="relative group">
+                <CoverImage
+                    isMyProfile={isMyProfile}
+                    userImg={userProfile?.profileImg}
+                />
                 <img
                     className="w-full h-64 object-cover"
                     src={coverImg || userProfile?.coverImg || "/cover.png"}
@@ -72,37 +84,26 @@ export default function ProfileHeader({ userProfile }: { userProfile: UserType }
             </div>
             <div className="flex items-start justify-between px-4">
                 <div className="relative group -translate-y-1/2">
-                    <img
-                        className="w-32 h-32 object-cover rounded-full"
-                        src={profileImg || userProfile?.profileImg || "/avatar-placeholder.png"}
+                    <ProfileImage
+                        isMyProfile={isMyProfile}
+                        userImg={userProfile?.profileImg}
                     />
-                    {isMyProfile && (
-                        <form onSubmit={handleSubmit}>
-                            <button
-                                className="opacity-100 md:opacity-0 group-hover:opacity-100 transition-all btn btn-sm btn-circle btn-primary absolute top-1 right-1"
-                                onClick={() => triggerImageChange(profileImgRef)}
-                            >
-                                <MdEdit className="w-4 h-4 fill-[--theme-accent]" />
-                                <input
-                                    type="file"
-                                    className="hidden"
-                                    accept="image/*"
-                                    ref={profileImgRef}
-                                    onChange={(e) => handleImageChange(e, setProfileImg)}
-                                />
-                            </button>
-                        </form>
-                    )}
                 </div>
-                {isMyProfile && <EditProfileModal />}
+                {isMyProfile && <EditProfileModal userProfile={userProfile} />}
                 {!isMyProfile && !isFollowedByMe && (
-                    <button className="mt-4 btn btn-primary rounded-full text-[--theme-accent] btn-sm">
-                        Follow
+                    <button
+                        className="mt-4 btn btn-primary rounded-full text-[--theme-accent] btn-sm"
+                        onClick={handleFollow}
+                    >
+                        {isFollowing ? <LoadingSpinner className="loading-xs" /> : "Follow"}
                     </button>
                 )}
                 {!isMyProfile && isFollowedByMe && (
-                    <button className="mt-4 btn btn-outline btn-primary rounded-full text-[--theme-accent] btn-sm">
-                        Unfollow
+                    <button
+                        className="mt-4 btn btn-outline btn-primary rounded-full hover:color-white hover:text-[--theme-accent] btn-sm"
+                        onClick={handleFollow}
+                    >
+                        {isFollowing ? <LoadingSpinner className="loading-xs" /> : "Unfollow"}
                     </button>
                 )}
             </div>

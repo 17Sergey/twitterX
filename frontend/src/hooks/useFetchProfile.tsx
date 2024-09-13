@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-import { UserType } from "../utils/dataTypes";
+import { UserProfileType } from "../utils/dataTypes";
 import { QUERY_KEYS } from "../utils/queryKeys";
 import { usersAPI } from "../api/usersAPI";
 
@@ -12,7 +12,7 @@ export const useFetchProfile = (username: string) => {
         isRefetching,
         error,
         refetch,
-    } = useQuery<UserType>({
+    } = useQuery<UserProfileType>({
         queryKey: [QUERY_KEYS.PROFILE],
         queryFn: () => usersAPI.getProfile(username),
         retry: 0,

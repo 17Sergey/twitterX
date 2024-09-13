@@ -4,10 +4,26 @@ export type UserType = {
     username: string;
     profileImg: string;
     coverImg: string;
+    email: string;
     bio: string;
     link: string;
     following: Array<string>;
     followers: Array<string>;
+    createdAt: string;
+};
+
+export type UserProfileType = {
+    _id: string;
+    fullName: string;
+    username: string;
+    profileImg: string;
+    coverImg: string;
+    email: string;
+    bio: string;
+    link: string;
+    following: Array<string>;
+    followers: Array<string>;
+    posts: number;
     createdAt: string;
 };
 

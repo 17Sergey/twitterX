@@ -3,6 +3,7 @@ import { v2 as cloudinary } from "cloudinary";
 
 import Notification from "../models/notification.model.js";
 import User from "../models/user.model.js";
+import Post from "../models/post.model.js";
 
 export const getUserProfile = async (req, res) => {
     try {
@@ -18,7 +19,12 @@ export const getUserProfile = async (req, res) => {
             return res.status(404).json({ error: "User not found" });
         }
 
-        res.status(200).json(user);
+        const posts = await Post.find({ user: user._id });
+
+        res.status(200).json({
+            ...user.toObject(),
+            posts: posts.length,
+        });
     } catch (error) {
         console.error(`Error in getUserProfile controller: ${error.message}`);
         res.status(500).json({ error: "Server error" });

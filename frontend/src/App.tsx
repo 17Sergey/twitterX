@@ -21,6 +21,7 @@ function App() {
         queryKey: [QUERY_KEYS.USER_AUTH],
         queryFn: authAPI.getMe,
         retry: false,
+        staleTime: 1000 * 60 * 1,
     });
 
     // If we log out and invalidate the query, then the retrieved data is an empty object {} and it still is a thuthy value.

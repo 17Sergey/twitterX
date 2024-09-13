@@ -7,6 +7,7 @@ import { UserType } from "../../utils/dataTypes";
 
 export default function ProfilePosts({ userProfile }: { userProfile: UserType }) {
     const [activeTab, setActiveTab] = useState("userPosts");
+
     return (
         <>
             <TabsList className="mt-8 md:mt-0">

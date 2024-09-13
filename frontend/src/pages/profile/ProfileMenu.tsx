@@ -1,8 +1,9 @@
 import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { UserType } from "../../utils/dataTypes";
 
-export default function ProfileMenu({ userProfile }: { userProfile: UserType }) {
+import { UserProfileType } from "../../utils/dataTypes";
+
+export default function ProfileMenu({ userProfile }: { userProfile: UserProfileType }) {
     return (
         <div className="flex items-center gap-4 py-4 px-4">
             <Link to="/">
@@ -12,7 +13,7 @@ export default function ProfileMenu({ userProfile }: { userProfile: UserType }) 
             </Link>
             <div>
                 <p className="font-bold text-xl">{userProfile.fullName}</p>
-                <p className="text-sm text-slate-500">5? posts</p>
+                <p className="text-sm text-slate-500">{userProfile.posts || 0} posts</p>
             </div>
         </div>
     );

@@ -1,28 +1,29 @@
 import LoadingSpinner from "./LoadingSpinner";
-import { useFollow } from "../../hooks/useFollow";
+
+import { useRightPanelFollow } from "../../hooks/useRightPanelFollow";
 
 export default function FollowButton({ userId }: { userId: string }) {
-    const { follow, isFollowing, isFollowed } = useFollow();
+    const { follow, isFollowing, isFollowed } = useRightPanelFollow(userId);
 
-    const handleFollow = (userId: string) => {
+    const handleFollow = () => {
         if (isFollowing) return;
-        follow(userId);
+        follow();
     };
 
     return (
         <>
             {!isFollowed && (
                 <button
-                    className="ml-8 btn bg-[--theme-accent] hover:bg-neutral-content text-primary-content btn-sm rounded-full"
-                    onClick={() => handleFollow(userId)}
+                    className="min-w-8 ml-8 btn bg-[--theme-accent] hover:bg-neutral-content text-primary-content btn-sm rounded-full"
+                    onClick={handleFollow}
                 >
                     {isFollowing ? <LoadingSpinner className="loading-xs -scale-75" /> : "Follow"}
                 </button>
             )}
             {isFollowed && (
                 <button
-                    className="ml-8 btn btn-outline hover:bg-[--theme-accent] btn-sm rounded-full"
-                    onClick={() => handleFollow(userId)}
+                    className="min-w-8 ml-8 btn btn-outline hover:bg-[--theme-accent] btn-sm rounded-full"
+                    onClick={handleFollow}
                 >
                     {isFollowing ? (
                         <LoadingSpinner className="loading-xs -scale-75" />

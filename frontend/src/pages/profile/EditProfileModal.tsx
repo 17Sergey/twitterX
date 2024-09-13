@@ -1,12 +1,23 @@
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { UserProfileType } from "../../utils/dataTypes";
 
-export default function EditProfileModal() {
+type EditProfileModalProps = {
+    // coverImg: string | null;
+    // profileImg: string | null;
+    userProfile: UserProfileType;
+};
+
+export default function EditProfileModal({
+    // coverImg,
+    // profileImg,
+    userProfile,
+}: EditProfileModalProps) {
     const [formData, setFormData] = useState({
-        fullName: "",
-        username: "",
-        email: "",
-        bio: "",
-        link: "",
+        fullName: userProfile.fullName,
+        username: userProfile.username,
+        email: userProfile.email,
+        bio: userProfile.bio,
+        link: userProfile.link,
         newPassword: "",
         currentPassword: "",
     });
@@ -112,6 +123,23 @@ export default function EditProfileModal() {
                             name="link"
                             onChange={handleInputChange}
                         />
+                        <div>
+                            {/* <p className="mb-4">Profile image: </p>
+                            <img
+                                className="w-32 h-32 object-cover rounded-full"
+                                src={
+                                    profileImg ||
+                                    userProfile?.profileImg ||
+                                    "/avatar-placeholder.png"
+                                }
+                            />
+                            <p className="mt-4 mb-4">Cover image: </p>
+                            <img
+                                className="w-full h-64 object-cover"
+                                src={coverImg || userProfile?.coverImg || "/cover.png"}
+                                alt=""
+                            /> */}
+                        </div>
                         <button className="btn btn-primary rounded-full btn-sm mt-2 md:mt-0 min-h-11 text-[--theme-accent]">
                             Update
                         </button>
