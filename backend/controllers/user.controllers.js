@@ -135,7 +135,6 @@ export const updateUser = async (req, res) => {
 
         if (currentPassword && newPassword) {
             const isMatch = await bcrypt.compare(currentPassword, user.password);
-            console.log(currentPassword, user.password);
 
             if (!isMatch) return res.status(400).json({ error: "Current password is incorrect" });
 
@@ -169,9 +168,21 @@ export const updateUser = async (req, res) => {
 
         user.fullName = fullName || user.fullName;
 
-        // TODO: Check unique
+        // Check unique fields
+
+        const userWithNewEmail = await User.findOne({ email, _id: { $ne: user._id } });
+        if (userWithNewEmail) {
+            return res.status(404).json({ error: "Email already exists" });
+        }
+
+        const userWithNewUsername = await User.findOne({ username, _id: { $ne: user._id } });
+        if (userWithNewUsername) {
+            return res.status(404).json({ error: "Username already exists" });
+        }
+
         user.email = email || user.email;
         user.username = username || user.username;
+
         user.bio = bio || user.bio;
         user.link = link || user.link;
         user.profileImg = profileImg || user.profileImg;

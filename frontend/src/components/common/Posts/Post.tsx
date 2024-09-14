@@ -33,7 +33,7 @@ export default function Post({ post }: PostProps) {
                     to={`/profile/${post.user.username}`}
                 >
                     <img
-                        className="w-12 h-12 rounded-full"
+                        className="w-10 h-10 rounded-full"
                         src={post.user?.profileImg || "/avatar-placeholder.png"}
                         alt="Avatar"
                     />

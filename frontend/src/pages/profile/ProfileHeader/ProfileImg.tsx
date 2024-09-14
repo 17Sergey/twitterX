@@ -3,10 +3,10 @@ import { MdEdit } from "react-icons/md";
 import { useImageUploading } from "../../../hooks/useImageUploading";
 
 type ProfileImgProps = {
-    uploadedImg: string | null;
+    uploadedImg: string | null | undefined;
     setUploadedImg: Dispatch<React.SetStateAction<string | null>>;
     isMyProfile: boolean;
-    userImg: string;
+    userImg: string | null | undefined;
 };
 
 export default function ProfileImg({

@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { authAPI } from "../../../api/authAPI";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UserType } from "../../../utils/dataTypes";
+import { QUERY_KEYS } from "../../../utils/queryKeys";
 
 export type UserData = {
     fullName: string;
@@ -20,7 +21,7 @@ export type UserData = {
 };
 
 export default function Sidebar() {
-    const { data: userAuth } = useQuery<UserType>({ queryKey: ["userAuth"] });
+    const { data: userAuth } = useQuery<UserType>({ queryKey: [QUERY_KEYS.USER_AUTH] });
 
     const queryClient = useQueryClient();
 
@@ -28,7 +29,7 @@ export default function Sidebar() {
         mutationFn: authAPI.logOut,
         onSuccess: (data) => {
             toast.success(data.message);
-            queryClient.invalidateQueries({ queryKey: ["userAuth"] });
+            queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER_AUTH] });
         },
         onError: (error) => {
             toast.error(error.message);

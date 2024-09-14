@@ -1,3 +1,5 @@
+import { Nullable } from "../utils/dataTypes";
+
 async function getSuggestedUsers() {
     const res = await fetch(`/api/users/suggested`);
 
@@ -30,13 +32,16 @@ async function follow(userId: string) {
 export type UpdateProfileDataType = {
     fullName: string;
     username: string;
-    profileImg?: string | null;
-    coverImg?: string | null;
+    profileImg: string;
+    coverImg: string;
     email: string;
     bio?: string;
     link?: string;
 };
-async function updateProfile(formData: UpdateProfileDataType) {
+
+export type NullableUpdateProfileDataType = Nullable<UpdateProfileDataType>;
+
+async function updateProfile(formData: NullableUpdateProfileDataType) {
     const res = await fetch(`/api/users/update`, {
         method: "POST",
         body: JSON.stringify(formData),

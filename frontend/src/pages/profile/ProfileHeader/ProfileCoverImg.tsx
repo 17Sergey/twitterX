@@ -6,7 +6,7 @@ type ProfileCoverImgProps = {
     uploadedImg: string | null;
     setUploadedImg: Dispatch<React.SetStateAction<string | null>>;
     isMyProfile: boolean;
-    userImg: string;
+    userImg: string | null | undefined;
 };
 
 export default function ProfileCoverImg({
