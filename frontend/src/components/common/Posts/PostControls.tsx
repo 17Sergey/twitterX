@@ -10,8 +10,8 @@ import CommentsModal from "./CommentsModal";
 import LoadingSpinner from "../LoadingSpinner";
 
 import { PostType } from "../../../utils/dataTypes";
-import { useUser } from "../../../hooks/useUser";
-import { useLike } from "../../../hooks/useLike";
+import { useUser } from "../../../hooks/queries/useUser";
+import { useLike } from "../../../hooks/mutations/useLike";
 
 type PostControlsProps = Pick<PostType, "comments" | "likes" | "_id">;
 

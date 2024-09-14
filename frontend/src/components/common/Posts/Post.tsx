@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 
 import LoadingSpinner from "../LoadingSpinner";
+import PostControls from "./PostControls";
 
 import { PostType } from "../../../utils/dataTypes";
-import { useDeletePost } from "../../../hooks/useDeletePost";
-import { useUser } from "../../../hooks/useUser";
-import PostControls from "./PostControls";
 import { formatPostDate } from "../../../utils/dateFunctions";
+import { useDeletePost } from "../../../hooks/mutations/useDeletePost";
+import { useUser } from "../../../hooks/queries/useUser";
 
 type PostProps = {
     post: PostType;

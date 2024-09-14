@@ -6,7 +6,7 @@ import LoadingSpinner from "../../../components/common/LoadingSpinner";
 
 import { Nullable, UserProfileType } from "../../../utils/dataTypes";
 import ToasterModified from "../../../components/common/ToasterModified";
-import { useUpdateProfile } from "../../../hooks/useUpdateProfile";
+import { useUpdateProfile } from "../../../hooks/mutations/useUpdateProfile";
 import { useModal } from "../../../hooks/useModal";
 
 type EditProfileModalProps = {

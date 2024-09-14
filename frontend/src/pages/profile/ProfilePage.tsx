@@ -6,7 +6,7 @@ import ProfileNotFound from "./ProfileNotFound";
 import ProfileMenu from "./ProfileMenu";
 import ProfilePosts from "./ProfilePosts";
 
-import { useFetchProfile } from "../../hooks/useFetchProfile";
+import { useFetchProfile } from "../../hooks/queries/useFetchProfile";
 
 export default function ProfilePage() {
     const { username } = useParams();

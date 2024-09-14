@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-import { postsAPI } from "../api/postsAPI";
-import { PostType } from "../utils/dataTypes";
-import { QUERY_KEYS } from "../utils/queryKeys";
+import { postsAPI } from "../../api/postsAPI";
+import { PostType } from "../../utils/dataTypes";
+import { QUERY_KEYS } from "../../utils/queryKeys";
 
 export const useLike = (postId: string) => {
     const queryClient = useQueryClient();

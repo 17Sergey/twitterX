@@ -1,6 +1,6 @@
 import LoadingSpinner from "./LoadingSpinner";
 
-import { useRightPanelFollow } from "../../hooks/useRightPanelFollow";
+import { useRightPanelFollow } from "../../hooks/mutations/useRightPanelFollow";
 
 export default function FollowButton({ userId }: { userId: string }) {
     const { follow, isFollowing, isFollowed } = useRightPanelFollow(userId);

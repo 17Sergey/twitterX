@@ -8,7 +8,7 @@ import { IoCloseSharp } from "react-icons/io5";
 
 import { postsAPI } from "../../api/postsAPI";
 import { QUERY_KEYS } from "../../utils/queryKeys";
-import { useUser } from "../../hooks/useUser";
+import { useUser } from "../../hooks/queries/useUser";
 
 function CreatePost() {
     const [text, setText] = useState("");

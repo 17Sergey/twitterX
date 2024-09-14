@@ -5,8 +5,8 @@ import ProfileInfo from "./ProfileInfo";
 import LoadingSpinner from "../../../components/common/LoadingSpinner";
 
 import { UserProfileType } from "../../../utils/dataTypes";
-import { useUser } from "../../../hooks/useUser";
-import { useFollow } from "../../../hooks/useFollow";
+import { useUser } from "../../../hooks/queries/useUser";
+import { useFollow } from "../../../hooks/mutations/useFollow";
 import ProfileCoverImg from "./ProfileCoverImg";
 import ProfileImg from "./ProfileImg";
 

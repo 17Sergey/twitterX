@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { UserType } from "../utils/dataTypes";
-import { QUERY_KEYS } from "../utils/queryKeys";
+import { UserType } from "../../utils/dataTypes";
+import { QUERY_KEYS } from "../../utils/queryKeys";
 
 export const useUser = () => {
     const {

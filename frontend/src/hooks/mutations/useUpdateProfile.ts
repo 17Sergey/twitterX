@@ -1,8 +1,8 @@
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { QUERY_KEYS } from "../utils/queryKeys";
-import { NullableUpdateProfileDataType, usersAPI } from "../api/usersAPI";
+import { QUERY_KEYS } from "../../utils/queryKeys";
+import { NullableUpdateProfileDataType, usersAPI } from "../../api/usersAPI";
 
 export const useUpdateProfile = () => {
     const queryClient = useQueryClient();
