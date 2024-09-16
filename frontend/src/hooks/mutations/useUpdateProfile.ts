@@ -18,8 +18,10 @@ export const useUpdateProfile = () => {
                 },
             });
             queryClient.setQueryData([QUERY_KEYS.PROFILE], data);
-            queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER_AUTH] });
-            queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
+            Promise.all([
+                queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER_AUTH] }),
+                queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] }),
+            ]);
         },
         onError: (error) => {
             toast.error(error.message);

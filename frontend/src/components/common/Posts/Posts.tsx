@@ -43,7 +43,6 @@ const Posts = ({ activeTab, userId }: { activeTab: string; userId?: string }) =>
     } = useQuery({
         queryKey: [QUERY_KEYS.POSTS],
         queryFn: () => postsAPI.getPosts(endpoint),
-        enabled: false,
     });
 
     useEffect(() => {
