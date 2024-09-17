@@ -4,9 +4,7 @@ export const useImageUploading = () => {
     const imgRef = useRef<HTMLInputElement>(null);
 
     const triggerImageChange = (imageRef: typeof imgRef) => {
-        if (imageRef.current) {
-            imageRef.current.click();
-        }
+        imageRef?.current?.click();
     };
 
     const handleImageChange = (

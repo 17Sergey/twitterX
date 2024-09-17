@@ -1,16 +1,18 @@
 import { Link } from "react-router-dom";
-import XSvg from "../../svgs/XSvg";
-import UserProfile from "../UserProfile";
-import SidebarMenu from "./SidebarMenu";
-import SidebarMenuItem from "./SidebarMenuItem";
+import toast from "react-hot-toast";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { MdHomeFilled } from "react-icons/md";
 import { IoNotifications } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
-import toast from "react-hot-toast";
+
+import XSvg from "../../svgs/XSvg";
+import UserProfile from "../UserProfile";
+import SidebarMenu from "./SidebarMenu";
+import SidebarMenuItem from "./SidebarMenuItem";
+
 import { authAPI } from "../../../api/authAPI";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UserType } from "../../../utils/dataTypes";
 import { QUERY_KEYS } from "../../../utils/queryKeys";
 

@@ -1,10 +1,10 @@
 import { FaLink } from "react-icons/fa";
 import { IoCalendarOutline } from "react-icons/io5";
 
-import { UserType } from "../../../utils/dataTypes";
+import { UserProfileType } from "../../../utils/dataTypes";
 import { formatMemberSinceDate } from "../../../utils/dateFunctions";
 
-export default function ProfileInfo({ userProfile }: { userProfile: UserType }) {
+export default function ProfileInfo({ userProfile }: { userProfile: UserProfileType }) {
     const memberSinceDate = formatMemberSinceDate(userProfile.createdAt);
 
     return (

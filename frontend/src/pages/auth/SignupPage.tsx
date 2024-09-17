@@ -1,13 +1,16 @@
+import { ChangeEvent, FormEvent, useState } from "react";
+import { Link } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+
 import { MdOutlineMail } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { MdPassword } from "react-icons/md";
 import { MdDriveFileRenameOutline } from "react-icons/md";
+
 import XSvg from "../../components/svgs/XSvg";
-import { Link } from "react-router-dom";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
-import toast from "react-hot-toast";
+
 import { authAPI } from "../../api/authAPI";
 
 const SignUpPage = () => {

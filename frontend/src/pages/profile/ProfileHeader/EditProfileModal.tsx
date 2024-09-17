@@ -46,9 +46,9 @@ export default function EditProfileModal({
         e.preventDefault();
         if (isPending) return;
 
-        // Send only the data that has changed
         const data: Nullable<typeof formData> = { ...formData };
 
+        // Send only the data that has changed
         data.fullName = formData.fullName === userProfile.fullName ? null : formData.fullName;
         data.username = formData.username === userProfile.username ? null : formData.username;
         data.email = formData.email === userProfile.email ? null : formData.email;

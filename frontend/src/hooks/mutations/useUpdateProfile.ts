@@ -10,13 +10,7 @@ export const useUpdateProfile = () => {
     const { mutate: updateProfile, isPending } = useMutation({
         mutationFn: (data: NullableUpdateProfileDataType) => usersAPI.updateProfile(data),
         onSuccess: (data) => {
-            toast.success("Profile updated successfully", {
-                style: {
-                    position: "relative",
-                    top: "10%",
-                    zIndex: 1000,
-                },
-            });
+            toast.success("Profile updated successfully");
             queryClient.setQueryData([QUERY_KEYS.PROFILE], data);
             Promise.all([
                 queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER_AUTH] }),

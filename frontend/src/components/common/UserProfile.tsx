@@ -1,6 +1,7 @@
 import { ComponentProps } from "react";
-import { UserData } from "./Sidebar/Sidebar";
 import { Link } from "react-router-dom";
+
+import { UserData } from "./Sidebar/Sidebar";
 
 type UserProfileProps = ComponentProps<"div"> & UserData;
 

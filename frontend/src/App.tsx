@@ -24,6 +24,7 @@ function App() {
         staleTime: 1000 * 60 * 1,
     });
 
+    // ??????
     // If we log out and invalidate the query, then the retrieved data is an empty object {} and it still is a thuthy value.
     // So this trick with null helps us.
     const userAuth = isError ? null : data;

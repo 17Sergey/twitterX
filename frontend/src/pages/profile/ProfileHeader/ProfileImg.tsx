@@ -24,7 +24,6 @@ export default function ProfileImg({
                 alt="Profile"
             />
             {isMyProfile && (
-                // <form onSubmit={handleSubmit}>
                 <div
                     className="opacity-100 md:opacity-0 group-hover:opacity-100 transition-all btn btn-sm btn-circle btn-primary absolute top-1 right-1"
                     onClick={() => triggerImageChange(imgRef)}

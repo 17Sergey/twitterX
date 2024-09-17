@@ -3,7 +3,7 @@ import { toast, Toaster, ToastBar } from "react-hot-toast";
 export default function ToasterModified() {
     return (
         <Toaster>
-            {/* Add closing on click */}
+            {/* Added closing on click */}
             {(t) => (
                 <ToastBar toast={t}>
                     {({ icon, message }) => (

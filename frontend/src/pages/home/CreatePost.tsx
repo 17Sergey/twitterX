@@ -35,7 +35,7 @@ function CreatePost() {
     const clearImage = () => {
         setImg(null);
         if (imgRef.current) {
-            imgRef.current.value = null;
+            imgRef.current.value = "";
         }
     };
 
@@ -88,9 +88,9 @@ function CreatePost() {
                     onChange={handleTextChange}
                 />
                 {img && (
-                    <div className="w-1/2 mx-auto mb-6 relative pt-4">
+                    <div className="w-3/4 mx-auto mb-6 relative pt-4">
                         <IoCloseSharp
-                            className="absolute top-0 right-0 text-[--theme-accent] bg-neutral rounded-full w-5 h-5 cursor-pointer"
+                            className="absolute top-5 -right-3 text-[--theme-accent] bg-neutral rounded-full w-6 h-6 cursor-pointer"
                             onClick={clearImage}
                         />
                         <img
@@ -105,7 +105,7 @@ function CreatePost() {
                         <div className="flex items-center gap-2">
                             <CiImageOn
                                 className="w-7 h-7 fill-primary cursor-pointer"
-                                onClick={() => imgRef.current.click()}
+                                onClick={() => imgRef?.current?.click()}
                             />
                             <input
                                 type="file"

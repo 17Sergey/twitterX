@@ -3,12 +3,12 @@ import { useState } from "react";
 import EditProfileModal from "./EditProfileModal";
 import ProfileInfo from "./ProfileInfo";
 import LoadingSpinner from "../../../components/common/LoadingSpinner";
+import ProfileCoverImg from "./ProfileCoverImg";
+import ProfileImg from "./ProfileImg";
 
 import { UserProfileType } from "../../../utils/dataTypes";
 import { useUser } from "../../../hooks/queries/useUser";
 import { useFollow } from "../../../hooks/mutations/useFollow";
-import ProfileCoverImg from "./ProfileCoverImg";
-import ProfileImg from "./ProfileImg";
 
 export default function ProfileHeader({ userProfile }: { userProfile: UserProfileType }) {
     const { userAuth } = useUser();

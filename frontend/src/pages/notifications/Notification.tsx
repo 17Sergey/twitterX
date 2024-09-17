@@ -1,6 +1,7 @@
 import { FaUser } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+
 import { NotificationType } from "../../utils/dataTypes";
 
 type NotificationProps = {

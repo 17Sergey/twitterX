@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import UserProfileSkeleton from "../../skeletons/UserProfileSkeleton";
 import UserProfile from "../UserProfile";
-import FollowButton from "../FollowButton";
+import FollowButton from "./FollowButton";
 
 import { UserType } from "../../../utils/dataTypes";
 import { usersAPI } from "../../../api/usersAPI";
