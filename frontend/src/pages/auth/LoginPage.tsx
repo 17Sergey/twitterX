@@ -9,7 +9,7 @@ import { FaUser } from "react-icons/fa";
 import XSvg from "../../components/svgs/XSvg";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 
-import { authAPI } from "../../api/authAPI";
+import { authAPI } from "../../api/authAPI.ts";
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({

@@ -11,7 +11,7 @@ import { MdDriveFileRenameOutline } from "react-icons/md";
 import XSvg from "../../components/svgs/XSvg";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 
-import { authAPI } from "../../api/authAPI";
+import { authAPI } from "../../api/authAPI.ts";
 
 const SignUpPage = () => {
     const [formData, setFormData] = useState({

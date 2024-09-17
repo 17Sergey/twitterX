@@ -12,7 +12,7 @@ import UserProfile from "../UserProfile";
 import SidebarMenu from "./SidebarMenu";
 import SidebarMenuItem from "./SidebarMenuItem";
 
-import { authAPI } from "../../../api/authAPI";
+import { authAPI } from "../../../api/authAPI.ts";
 import { UserType } from "../../../utils/dataTypes";
 import { QUERY_KEYS } from "../../../utils/queryKeys";
 
@@ -29,7 +29,7 @@ export default function Sidebar() {
 
     const { mutate } = useMutation({
         mutationFn: authAPI.logOut,
-        onSuccess: (data) => {
+        onSuccess: (data: { message: string }) => {
             toast.success(data.message);
             queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER_AUTH] });
         },

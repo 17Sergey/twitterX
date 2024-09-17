@@ -1,20 +1,21 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import HomePage from "./pages/home/HomePage";
+import { useQuery } from "@tanstack/react-query";
 
+import HomePage from "./pages/home/HomePage";
 import SignupPage from "./pages/auth/SignupPage";
 import LoginPage from "./pages/auth/LoginPage";
-import Sidebar from "./components/common/Sidebar/Sidebar";
-import RightPanel from "./components/common/RightPanel/RightPanel";
 import Notifications from "./pages/notifications/Notifications";
 import ProfilePage from "./pages/profile/ProfilePage";
-import ToasterModified from "./components/common/ToasterModified";
-import { useQuery } from "@tanstack/react-query";
-import { authAPI } from "./api/authAPI";
-
-import LoadingSpinner from "./components/common/LoadingSpinner";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
+
+import Sidebar from "./components/common/Sidebar/Sidebar";
+import RightPanel from "./components/common/RightPanel/RightPanel";
+import ToasterModified from "./components/common/ToasterModified";
+import LoadingSpinner from "./components/common/LoadingSpinner";
+
 import { UserType } from "./utils/dataTypes";
 import { QUERY_KEYS } from "./utils/queryKeys";
+import { authAPI } from "./api/authAPI";
 
 function App() {
     const { data, isLoading, isError } = useQuery<UserType>({
