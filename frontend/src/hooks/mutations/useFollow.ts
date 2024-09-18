@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 import { usersAPI } from "../../api/usersAPI";
 import { QUERY_KEYS } from "../../utils/queryKeys";
-import { UserProfileType } from "../../utils/dataTypes";
+// import { UserProfileType } from "../../utils/dataTypes";
 
 type FollowResponse = {
     message: string;

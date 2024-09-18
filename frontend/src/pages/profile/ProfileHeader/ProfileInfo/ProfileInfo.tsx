@@ -70,6 +70,7 @@ export default function ProfileInfo({ userProfile }: { userProfile: UserProfileT
                             {userProfile?.followers?.length === 0 && (
                                 <p>Oops...Not followers yet</p>
                             )}
+                            <p>In progress...</p>
                             {/* {userProfile?.followers.toString()} */}
                         </div>
                     </Modal>

@@ -16,7 +16,7 @@ export default function ProfileHeader({ userProfile }: { userProfile: UserProfil
     const isMyProfile = userAuth?._id === userProfile._id;
     const isFollowedByMe = userAuth?.following.includes(userProfile._id);
 
-    const { follow, isFollowing } = useFollow(userProfile._id);
+    const { follow, isPending: isFollowing } = useFollow(userProfile._id);
 
     const handleFollow = () => {
         follow();
