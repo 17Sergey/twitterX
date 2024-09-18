@@ -21,8 +21,18 @@ export const getUserProfile = async (req, res) => {
 
         const posts = await Post.find({ user: user._id });
 
+        let populatedUser = await user.populate({
+            path: "following",
+            select: "-password",
+        });
+
+        populatedUser = await user.populate({
+            path: "followers",
+            select: "-password",
+        });
+
         res.status(200).json({
-            ...user.toObject(),
+            ...populatedUser.toObject(),
             posts: posts.length,
         });
     } catch (error) {

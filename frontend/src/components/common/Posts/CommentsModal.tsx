@@ -1,9 +1,9 @@
-import { RefObject, useRef } from "react";
+import { RefObject } from "react";
 
+import Modal from "../Modal";
 import Comment from "./Comment";
 import AddCommentForm from "./AddCommentForm";
 
-import { useOnClickOutside } from "usehooks-ts";
 import { PostType } from "../../../utils/dataTypes";
 
 type PostControlsProps = {
@@ -11,47 +11,22 @@ type PostControlsProps = {
 } & Pick<PostType, "comments" | "_id">;
 
 export default function CommentsModal({ modalRef, comments, _id: postId }: PostControlsProps) {
-    const handleClickOutside = () => {
-        if (modalRef.current) {
-            modalRef.current.close();
-        }
-    };
-
-    const modalBox = useRef(null);
-    useOnClickOutside(modalBox, handleClickOutside);
-
     return (
-        <dialog
-            id="my_modal_3"
-            className="modal cursor-pointer"
-            ref={modalRef}
+        <Modal
+            title={"FOLLOWERS"}
+            modalRef={modalRef}
         >
-            <div
-                ref={modalBox}
-                className="modal-box p-6 pr-0 mx-2 w-4/5 flex flex-col max-w-3xl border border-neutral md:border-neutral-content cursor-default"
-            >
-                <div className="pr-2">
-                    <form method="dialog">
-                        <button className="btn btn-sm btn-circle btn-ghost absolute right-5 top-5 outline-none">
-                            ✕
-                        </button>
-                    </form>
-                    <h3 className="font-bold text-lg mb-8">COMMENTS</h3>
-                </div>
-
-                <div className="overflow-y-auto max-h-96">
-                    {comments.map((comment) => (
-                        <Comment
-                            key={comment._id}
-                            comment={comment}
-                        />
-                    ))}
-                </div>
-
-                <div className="pr-6">
-                    <AddCommentForm _id={postId} />
-                </div>
+            <div className="overflow-y-auto max-h-96">
+                {comments.map((comment) => (
+                    <Comment
+                        key={comment._id}
+                        comment={comment}
+                    />
+                ))}
             </div>
-        </dialog>
+            <div className="pr-6">
+                <AddCommentForm _id={postId} />
+            </div>
+        </Modal>
     );
 }

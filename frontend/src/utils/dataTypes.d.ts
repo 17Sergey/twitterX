@@ -25,8 +25,8 @@ export type UserProfileType = {
     email: string;
     bio?: string;
     link?: string;
-    following: Array<string>;
-    followers: Array<string>;
+    following: Array<UserType>;
+    followers: Array<UserType>;
     posts: number;
     createdAt: string;
 };

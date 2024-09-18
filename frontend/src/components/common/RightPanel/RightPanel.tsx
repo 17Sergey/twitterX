@@ -55,6 +55,7 @@ export default function RightPanel() {
                                 <FollowButton
                                     key={user._id}
                                     userId={user._id}
+                                    propIsFollowed={true}
                                 />
                             </UserProfile>
                         );

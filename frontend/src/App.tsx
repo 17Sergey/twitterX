@@ -38,7 +38,7 @@ function App() {
         );
 
     return (
-        <div className="max-w-6xl mx-auto px-4 flex items-start">
+        <div className="max-w-6xl mx-auto flex items-start">
             {userAuth && <Sidebar />}
             <main className="w-full">
                 <Routes>
@@ -66,7 +66,7 @@ function App() {
                     />
                 </Routes>
             </main>
-            {userAuth && <RightPanel />}
+            {/* {userAuth && <RightPanel />} */}
             {/* For messages on screen */}
             <ToasterModified />
         </div>

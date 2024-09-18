@@ -89,7 +89,6 @@ export const commentPost = async (req, res) => {
             path: "comments.user",
             select: "-password",
         });
-        console.log(newPost);
 
         res.status(200).json(post);
     } catch (error) {

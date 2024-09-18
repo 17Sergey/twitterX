@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import EditProfileModal from "./EditProfileModal";
-import ProfileInfo from "./ProfileInfo";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import LoadingSpinner from "../../../components/common/LoadingSpinner";
 import ProfileCoverImg from "./ProfileCoverImg";
 import ProfileImg from "./ProfileImg";

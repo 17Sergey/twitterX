@@ -11,7 +11,7 @@ type FollowResponse = {
 };
 
 export const useRightPanelFollow = (userId: string) => {
-    const [isFollowed, setIsFollowed] = useState<boolean>(false);
+    const [isFollowed, setIsFollowed] = useState<boolean | null>(null);
 
     const queryClient = useQueryClient();
 
@@ -28,5 +28,5 @@ export const useRightPanelFollow = (userId: string) => {
         },
     });
 
-    return { follow, isFollowing, isFollowed };
+    return { follow, isFollowing, isFollowedFromServer: isFollowed };
 };

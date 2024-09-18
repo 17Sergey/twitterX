@@ -1,5 +1,3 @@
-import { useRef } from "react";
-
 import { FaRegComment } from "react-icons/fa";
 import { BiRepost } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
@@ -12,6 +10,7 @@ import LoadingSpinner from "../LoadingSpinner";
 import { PostType } from "../../../utils/dataTypes";
 import { useUser } from "../../../hooks/queries/useUser";
 import { useLike } from "../../../hooks/mutations/useLike";
+import { useModal } from "../../../hooks/useModal";
 
 type PostControlsProps = Pick<PostType, "comments" | "likes" | "_id">;
 
@@ -33,20 +32,14 @@ export default function PostControls({ comments, likes, _id: postId }: PostContr
         likeMutation();
     };
 
-    const commentsModalRef = useRef<HTMLDialogElement>(null);
-
-    const hadleCommentsClick = () => {
-        if (commentsModalRef.current) {
-            commentsModalRef.current.showModal();
-        }
-    };
+    const { modalRef: commentsModalRef, openModal: openCommentsModal } = useModal();
 
     return (
         <div className="mt-6 flex justify-between items-center">
             <div>
                 <div
                     className="flex items-center gap-2 group cursor-pointer"
-                    onClick={hadleCommentsClick}
+                    onClick={openCommentsModal}
                 >
                     <FaRegComment
                         className={`w-4 h-4 fill-neutral-content group-hover:fill-primary transition-all`}

@@ -45,7 +45,7 @@ export default function Sidebar() {
     const iconStyles = `w-7 h-7`;
 
     return (
-        <div className="max-w-56 flex flex-col shrink-0 h-screen pb-8 pr-2 pt-4 sticky top-0 border-r border-neutral">
+        <div className="max-w-56 hidden md:flex flex-col shrink-0 h-screen pb-8 pr-2 pt-4 sticky top-0 border-r border-neutral">
             <Link
                 to="/"
                 className="px-4"

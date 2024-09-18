@@ -14,7 +14,7 @@ type CommentProps = {
 
 export default function Comment({ comment }: CommentProps) {
     return (
-        <div>
+        <div className="mb-4">
             <div
                 key={comment._id}
                 className="flex gap-1 items-start"
@@ -32,15 +32,15 @@ export default function Comment({ comment }: CommentProps) {
                 <div>
                     <Link
                         to={`/profile/${comment.user?.username}`}
-                        className="flex flex-wrap items-baseline relative"
+                        className="flex flex-col xs:flex-row xs:gap-2 items-baseline relative"
                     >
                         <p className="font-semibold">{comment.user?.fullName}</p>
                         <p className="font-normal text-sm opacity-30">@{comment.user?.username}</p>
                     </Link>
-                    <p className="mt-2 hidden md:block">{comment.text}</p>
+                    <p className="mt-2 hidden md:block mr-2">{comment.text}</p>
                 </div>
             </div>
-            <p className="mt-2 md:hidden">{comment.text}</p>
+            <p className="mt-2 md:hidden mr-2">{comment.text}</p>
         </div>
     );
 }

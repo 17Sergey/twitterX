@@ -1,11 +1,19 @@
 /** @type {import('tailwindcss').Config} */
+
+import defaultTheme from "tailwindcss/defaultTheme";
+
 import daisyui from "daisyui";
 import daisyUIThemes from "daisyui/src/theming/themes";
+
 export default {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
         extend: {
             "theme-accent": "rgb(255, 255, 255)",
+        },
+        screens: {
+            xs: "475px",
+            ...defaultTheme.screens,
         },
     },
     plugins: [daisyui],
