@@ -17,7 +17,7 @@ export default function Comment({ comment }: CommentProps) {
         <div>
             <div
                 key={comment._id}
-                className="flex gap-2 items-start mt-8"
+                className="flex gap-1 items-start"
             >
                 <Link
                     to={`/profile/${comment.user?.username}`}
@@ -32,7 +32,7 @@ export default function Comment({ comment }: CommentProps) {
                 <div>
                     <Link
                         to={`/profile/${comment.user?.username}`}
-                        className="flex flex-wrap items-baseline relative md:gap-2"
+                        className="flex flex-wrap items-baseline relative"
                     >
                         <p className="font-semibold">{comment.user?.fullName}</p>
                         <p className="font-normal text-sm opacity-30">@{comment.user?.username}</p>

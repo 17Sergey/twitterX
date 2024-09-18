@@ -28,23 +28,29 @@ export default function CommentsModal({ modalRef, comments, _id: postId }: PostC
         >
             <div
                 ref={modalBox}
-                className="modal-box mx-2 w-4/5 max-w-3xl border border-neutral md:border-neutral-content cursor-default"
+                className="modal-box p-6 pr-0 mx-2 w-4/5 flex flex-col max-w-3xl border border-neutral md:border-neutral-content cursor-default"
             >
-                <form method="dialog">
-                    <button className="btn btn-sm btn-circle btn-ghost absolute right-5 top-5 outline-none">
-                        ✕
-                    </button>
-                </form>
-                <h3 className="font-bold text-lg mb-8">COMMENTS</h3>
+                <div className="pr-2">
+                    <form method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-5 top-5 outline-none">
+                            ✕
+                        </button>
+                    </form>
+                    <h3 className="font-bold text-lg mb-8">COMMENTS</h3>
+                </div>
 
-                {comments.map((comment) => (
-                    <Comment
-                        key={comment._id}
-                        comment={comment}
-                    />
-                ))}
+                <div className="overflow-y-auto max-h-96">
+                    {comments.map((comment) => (
+                        <Comment
+                            key={comment._id}
+                            comment={comment}
+                        />
+                    ))}
+                </div>
 
-                <AddCommentForm _id={postId} />
+                <div className="pr-6">
+                    <AddCommentForm _id={postId} />
+                </div>
             </div>
         </dialog>
     );
