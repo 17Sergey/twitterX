@@ -66,7 +66,7 @@ function App() {
                     />
                 </Routes>
             </main>
-            {/* {userAuth && <RightPanel />} */}
+            {userAuth && <RightPanel />}
             {/* For messages on screen */}
             <ToasterModified />
         </div>

@@ -21,11 +21,11 @@ export const useFollow = (userId: string) => {
                 queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.USER_AUTH] }),
                 queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.SUGGESTED_USERS] }),
                 queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.PROFILE] }), // ???
-                queryClient.setQueryData([QUERY_KEYS.PROFILE], (oldData: UserProfileType) => {
-                    // oldData.following.map(followedUser => {
-                    //     if (data.followed) return
-                    // })
-                });
+                // queryClient.setQueryData([QUERY_KEYS.PROFILE], (oldData: UserProfileType) => {
+                //     // oldData.following.map(followedUser => {
+                //     //     if (data.followed) return
+                //     // })
+                // });
             ]);
             toast.success(data.message);
         },
