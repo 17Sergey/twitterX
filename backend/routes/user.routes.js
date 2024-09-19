@@ -1,20 +1,25 @@
-import express from 'express';
+import express from "express";
 
-import { protectRoute } from '../middleware/protectRoute.js';
+import { protectRoute } from "../middleware/protectRoute.js";
 
 import {
     followUnfollowUser,
     getSuggestedUsers,
+    getUserFollowers,
+    getUserFollowing,
     getUserProfile,
     updateUser,
-} from '../controllers/user.controllers.js';
+} from "../controllers/user.controllers.js";
 
 const router = express.Router();
 
-router.get('/profile/:username', protectRoute, getUserProfile);
-router.get('/suggested', protectRoute, getSuggestedUsers);
+router.get("/suggested", protectRoute, getSuggestedUsers);
 
-router.post('/follow/:id', protectRoute, followUnfollowUser);
-router.post('/update', protectRoute, updateUser);
+router.get("/profile/:username", protectRoute, getUserProfile);
+router.get("/profile/followers/:username", getUserFollowers);
+router.get("/profile/following/:username", getUserFollowing);
+
+router.post("/follow/:id", protectRoute, followUnfollowUser);
+router.post("/update", protectRoute, updateUser);
 
 export default router;

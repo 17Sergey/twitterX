@@ -7,6 +7,7 @@ import FollowButton from "./FollowButton";
 import { UserType } from "../../../utils/dataTypes";
 import { usersAPI } from "../../../api/usersAPI";
 import { QUERY_KEYS } from "../../../utils/queryKeys";
+import { useUser } from "../../../hooks/queries/useUser";
 
 export default function RightPanel() {
     const {
@@ -18,6 +19,10 @@ export default function RightPanel() {
         queryFn: usersAPI.getSuggestedUsers,
         retry: false,
     });
+
+    const { userAuth } = useUser();
+
+    console.log(userAuth);
 
     return (
         <aside className="min-h-screen border-l border-neutral hidden md:block shrink-0 sticky top-0">
@@ -55,7 +60,7 @@ export default function RightPanel() {
                                 <FollowButton
                                     key={user._id}
                                     userId={user._id}
-                                    isFollowed={false}
+                                    isFollowedProp={userAuth?.following.includes(user._id) || false}
                                 />
                             </UserProfile>
                         );

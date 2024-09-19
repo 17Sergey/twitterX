@@ -21,20 +21,62 @@ export const getUserProfile = async (req, res) => {
 
         const posts = await Post.find({ user: user._id });
 
-        let populatedUser = await user.populate({
-            path: "following",
-            select: "-password",
-        });
-
-        populatedUser = await user.populate({
-            path: "followers",
-            select: "-password",
-        });
-
         res.status(200).json({
-            ...populatedUser.toObject(),
+            ...user.toObject(),
             posts: posts.length,
         });
+    } catch (error) {
+        console.error(`Error in getUserProfile controller: ${error.message}`);
+        res.status(500).json({ error: "Server error" });
+    }
+};
+
+export const getUserFollowers = async (req, res) => {
+    try {
+        const { username } = req.params;
+
+        if (!username) {
+            return res.status(404).json({ error: "Username not found" });
+        }
+
+        const user = await User.findOne({ username })
+            .populate({
+                path: "followers",
+                select: "-password",
+            })
+            .select("-password");
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.status(200).json(user.followers);
+    } catch (error) {
+        console.error(`Error in getUserProfile controller: ${error.message}`);
+        res.status(500).json({ error: "Server error" });
+    }
+};
+
+export const getUserFollowing = async (req, res) => {
+    try {
+        const { username } = req.params;
+
+        if (!username) {
+            return res.status(404).json({ error: "Username not found" });
+        }
+
+        const user = await User.findOne({ username })
+            .populate({
+                path: "following",
+                select: "-password",
+            })
+            .select("-password");
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.status(200).json(user.following);
     } catch (error) {
         console.error(`Error in getUserProfile controller: ${error.message}`);
         res.status(500).json({ error: "Server error" });

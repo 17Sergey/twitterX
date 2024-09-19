@@ -4,12 +4,12 @@ import { useFollow } from "../../../hooks/mutations/useFollow";
 
 export default function FollowButton({
     userId,
-    isFollowed,
+    isFollowedProp,
 }: {
     userId: string;
-    isFollowed: boolean;
+    isFollowedProp: boolean;
 }) {
-    const { follow, isPending } = useFollow(userId);
+    const { follow, isPending, isFollowed } = useFollow(userId, isFollowedProp);
 
     const handleFollow = () => {
         if (isPending) return;
@@ -31,7 +31,7 @@ export default function FollowButton({
                     className="min-w-8 ml-8 btn btn-outline hover:bg-[--theme-accent] btn-sm rounded-full"
                     onClick={handleFollow}
                 >
-                    {isPending ? <LoadingSpinner className="loading-xs -scale-75" /> : "Following"}
+                    {isPending ? <LoadingSpinner className="loading-xs -scale-75" /> : "Unfollow"}
                 </button>
             )}
         </>
