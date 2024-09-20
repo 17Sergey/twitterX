@@ -1,11 +1,12 @@
 import { FaLink } from "react-icons/fa";
 import { IoCalendarOutline } from "react-icons/io5";
 
+import FollowingModal from "./FollowingModal";
+import FollowersModal from "./FollowersModal";
+
 import { UserProfileType } from "../../../../utils/dataTypes";
 import { formatMemberSinceDate } from "../../../../utils/dateFunctions";
 import { useModal } from "../../../../hooks/useModal";
-import Modal from "../../../../components/common/Modal";
-import FollowingModal from "./FollowingModal";
 
 export default function ProfileInfo({ userProfile }: { userProfile: UserProfileType }) {
     const memberSinceDate = formatMemberSinceDate(userProfile.createdAt);
@@ -62,18 +63,10 @@ export default function ProfileInfo({ userProfile }: { userProfile: UserProfileT
                         <span className="font-bold">{userProfile?.followers?.length || 0}</span>
                         &nbsp;Followers
                     </p>
-                    <Modal
-                        title={"FOLLOWERS"}
-                        modalRef={followersModalRef}
-                    >
-                        <div className="overflow-y-auto max-h-96">
-                            {userProfile?.followers?.length === 0 && (
-                                <p>Oops...Not followers yet</p>
-                            )}
-                            <p>In progress...</p>
-                            {/* {userProfile?.followers.toString()} */}
-                        </div>
-                    </Modal>
+                    <FollowersModal
+                        followersModalRef={followersModalRef}
+                        userProfile={userProfile}
+                    />
                 </div>
             </div>
         </div>

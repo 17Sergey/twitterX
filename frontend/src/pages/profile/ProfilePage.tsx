@@ -7,10 +7,15 @@ import ProfileMenu from "./ProfileMenu";
 import ProfilePosts from "./ProfilePosts";
 
 import { useFetchProfile } from "../../hooks/queries/useFetchProfile";
+import { useUser } from "../../hooks/queries/useUser";
 
 export default function ProfilePage() {
     const { username } = useParams();
-    const { userProfile, isLoading, isRefetching, error } = useFetchProfile(username || "");
+    const { userAuth } = useUser();
+
+    const usernameForFetching = username || userAuth?.username || "";
+
+    const { userProfile, isLoading, isRefetching, error } = useFetchProfile(usernameForFetching);
 
     if (isLoading || isRefetching) return <ProfileHeaderSkeleton />;
 

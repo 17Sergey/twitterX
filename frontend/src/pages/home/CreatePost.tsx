@@ -3,12 +3,12 @@ import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { CiImageOn } from "react-icons/ci";
-import { BsEmojiSmileFill } from "react-icons/bs";
 import { IoCloseSharp } from "react-icons/io5";
 
 import { postsAPI } from "../../api/postsAPI";
 import { QUERY_KEYS } from "../../utils/queryKeys";
 import { useUser } from "../../hooks/queries/useUser";
+import { UserProfileAvatar, UserProfileName } from "../../components/common/UserProfile";
 
 function CreatePost() {
     const [text, setText] = useState("");
@@ -68,16 +68,13 @@ function CreatePost() {
 
     return (
         <div className="p-4">
-            <div className="flex items-center gap-4">
-                <img
-                    className="w-10 h-10 rounded-full"
-                    src={userAuth?.profileImg || "/avatar-placeholder.png"}
-                    alt="Avatar"
-                />
+            <div className="flex items-center gap-3">
+                <UserProfileAvatar src={userAuth?.profileImg} />
                 <div>
-                    <p className="font-semibold text-[--theme-accent] text-base">
-                        {userAuth?.fullName}
-                    </p>
+                    <UserProfileName
+                        fullName={userAuth?.fullName || ""}
+                        className="font-semibold text-[--theme-accent] text-base max-w-full"
+                    />
                 </div>
             </div>
             <form onSubmit={handleSubmit}>
@@ -114,7 +111,6 @@ function CreatePost() {
                                 ref={imgRef}
                                 onChange={handleImgChange}
                             />
-                            <BsEmojiSmileFill className="w-6 h-7 fill-primary" />
                         </div>
                         <button className="btn btn-primary text-[--theme-accent] btn-sm rounded-full px-4">
                             {isPosting ? "Posting..." : "Post"}

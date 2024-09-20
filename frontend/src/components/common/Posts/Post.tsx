@@ -8,6 +8,7 @@ import { PostType } from "../../../utils/dataTypes";
 import { formatPostDate } from "../../../utils/dateFunctions";
 import { useDeletePost } from "../../../hooks/mutations/useDeletePost";
 import { useUser } from "../../../hooks/queries/useUser";
+import { UserProfileAvatar, UserProfileName, UserProfileUsername } from "../UserProfile";
 
 type PostProps = {
     post: PostType;
@@ -26,45 +27,42 @@ export default function Post({ post }: PostProps) {
     };
 
     return (
-        <div className="border-b border-1 border-neutral pt-4 pb-4">
-            <div className="flex gap-2 px-4">
-                <Link
-                    className="flex-shrink-0"
-                    to={`/profile/${post.user.username}`}
-                >
-                    <img
-                        className="w-10 h-10 rounded-full"
-                        src={post.user?.profileImg || "/avatar-placeholder.png"}
-                        alt="Avatar"
-                    />
-                </Link>
-                <div className="w-full">
-                    <div className="flex justify-between items-center gap-4 relative top-1.5">
-                        <Link
-                            to={`/profile/${post.user.username}`}
-                            className="flex flex-wrap items-baseline gap-2"
-                        >
-                            <p className="font-semibold text-base">{post.user?.fullName}</p>
-                            <p className="font-normal text-sm opacity-30">@{post.user?.username}</p>
-                            <p className="font-normal text-sm opacity-30">{formattedDate}</p>
-                        </Link>
-                        {isMyPost && !isDeletePending && (
-                            <FaTrash
-                                onClick={handleDeletePost}
-                                className="w-4 h-4 cursor-pointer hover:fill-error transition-all"
+        <div className="border-b border-1 border-neutral p-4">
+            <div className="flex justify-between items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                    <Link
+                        to={`/profile/${post.user.username}`}
+                        className="flex flex-wrap items-center gap-2"
+                    >
+                        <UserProfileAvatar src={post.user.profileImg} />
+                        <div className="md:flex gap-2 items-center">
+                            <UserProfileName
+                                fullName={post.user.fullName}
+                                className="font-semibold text-base text-neutral-content"
                             />
-                        )}
-                        {isDeletePending && (
-                            <LoadingSpinner className="loading-xs cursor-pointer" />
-                        )}
-                    </div>
+                            <UserProfileUsername
+                                username={post.user.username}
+                                className="opacity-30"
+                            />
+                        </div>
+                    </Link>
+                    <p className="self-start md:self-center relative top-0.5 md:top-0 text-sm opacity-30 text-nowrap">
+                        {formattedDate}
+                    </p>
                 </div>
+                {isMyPost && !isDeletePending && (
+                    <FaTrash
+                        onClick={handleDeletePost}
+                        className="w-4 h-4 shrink-0 cursor-pointer hover:fill-error transition-all"
+                    />
+                )}
+                {isDeletePending && <LoadingSpinner className="loading-xs cursor-pointer" />}
             </div>
-            <div className="px-4">
+            <div>
                 <p className="mt-2">{post.text}</p>
                 {post.img && (
                     <img
-                        className="mt-4 w-full h-80 object-contain rounded-lg border border-neutral"
+                        className="mt-4 w-full max-h-80 h-fit object-contain rounded-lg border border-neutral"
                         src={post.img}
                         alt="From post"
                     />
