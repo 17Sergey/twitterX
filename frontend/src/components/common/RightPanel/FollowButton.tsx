@@ -20,7 +20,7 @@ export default function FollowButton({
         <>
             {!isFollowed && (
                 <button
-                    className="min-w-8 ml-8 btn bg-[--theme-accent] hover:bg-neutral-content text-primary-content btn-sm rounded-full"
+                    className="min-w-8 ml-4 btn bg-[--theme-accent] hover:bg-neutral-content text-primary-content btn-sm rounded-full"
                     onClick={handleFollow}
                 >
                     {isPending ? <LoadingSpinner className="loading-xs -scale-75" /> : "Follow"}
@@ -28,7 +28,7 @@ export default function FollowButton({
             )}
             {isFollowed && (
                 <button
-                    className="min-w-8 ml-8 btn btn-outline hover:bg-[--theme-accent] btn-sm rounded-full"
+                    className="min-w-8 ml-4 btn btn-outline hover:bg-[--theme-accent] btn-sm rounded-full"
                     onClick={handleFollow}
                 >
                     {isPending ? <LoadingSpinner className="loading-xs -scale-75" /> : "Unfollow"}

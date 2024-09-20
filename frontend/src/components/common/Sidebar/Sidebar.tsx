@@ -8,7 +8,7 @@ import { FaUser } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 
 import XSvg from "../../svgs/XSvg";
-import UserProfile from "../UserProfile";
+import { UserProfileAvatar, UserProfileName, UserProfileUsername } from "../UserProfile";
 import SidebarMenu from "./SidebarMenu";
 import SidebarMenuItem from "./SidebarMenuItem";
 
@@ -45,7 +45,7 @@ export default function Sidebar() {
     const iconStyles = `w-7 h-7`;
 
     return (
-        <div className="max-w-56 hidden md:flex flex-col shrink-0 h-screen pb-8 pr-2 pt-4 sticky top-0 border-r border-neutral">
+        <div className="max-w-56 hidden md:flex flex-col shrink-0 h-screen pb-8 pt-4 sticky top-0">
             <Link
                 to="/"
                 className="px-4"
@@ -70,19 +70,27 @@ export default function Sidebar() {
                 />
             </SidebarMenu>
             {userAuth && (
-                <UserProfile
-                    fullName={userAuth.fullName}
-                    username={userAuth.username}
-                    profileImg={userAuth.profileImg}
-                    className={"mt-auto px-4 py-2 rounded-full transition-colors hover:bg-neutral"}
-                >
+                <div className="flex justify-between items-center gap-4 mt-auto px-4 py-2 rounded-full transition-colors hover:bg-neutral">
+                    <Link
+                        to={`/profile/${userAuth.username}`}
+                        className={`cursor-pointer flex items-center gap-3`}
+                    >
+                        <UserProfileAvatar src={userAuth.profileImg} />
+                        <div>
+                            <UserProfileName
+                                fullName={userAuth.fullName}
+                                className="max-w-24 truncate"
+                            />
+                            <UserProfileUsername username={userAuth.username} />
+                        </div>
+                    </Link>
                     <Link
                         to="/login"
                         onClick={handleLogOut}
                     >
-                        <BiLogOut className="w-7 h-7 ml-4" />
+                        <BiLogOut className="w-7 h-7" />
                     </Link>
-                </UserProfile>
+                </div>
             )}
         </div>
     );

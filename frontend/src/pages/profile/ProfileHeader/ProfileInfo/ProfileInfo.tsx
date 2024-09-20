@@ -49,10 +49,10 @@ export default function ProfileInfo({ userProfile }: { userProfile: UserProfileT
                         <span className="font-bold">{userProfile?.following?.length || 0}</span>
                         &nbsp;Following
                     </p>
-                    <FollowingModal
+                    {/* <FollowingModal
                         followingModalRef={followingModalRef}
                         userProfile={userProfile}
-                    />
+                    /> */}
                 </div>
                 <div>
                     <p

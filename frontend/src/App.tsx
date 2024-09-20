@@ -18,17 +18,15 @@ import { QUERY_KEYS } from "./utils/queryKeys";
 import { authAPI } from "./api/authAPI";
 
 function App() {
-    const { data, isLoading, isError } = useQuery<UserType>({
+    const { data, isLoading, isSuccess } = useQuery<UserType>({
         queryKey: [QUERY_KEYS.USER_AUTH],
         queryFn: authAPI.getMe,
         retry: false,
-        staleTime: 1000 * 60 * 1,
     });
 
-    // ??????
     // If we log out and invalidate the query, then the retrieved data is an empty object {} and it still is a thuthy value.
     // So this trick with null helps us.
-    const userAuth = isError ? null : data;
+    const userAuth = isSuccess ? data : null;
 
     if (isLoading)
         return (
@@ -38,36 +36,34 @@ function App() {
         );
 
     return (
-        <div className="max-w-6xl mx-auto flex items-start">
+        <div className="max-w-6xl mx-auto flex flex-start">
             {userAuth && <Sidebar />}
-            <main className="w-full">
-                <Routes>
-                    <Route element={<ProtectedRoutes userAuth={userAuth} />}>
-                        <Route
-                            path="/"
-                            element={<HomePage />}
-                        />
-                        <Route
-                            path="/notifications"
-                            element={<Notifications />}
-                        />
-                        <Route
-                            path="/profile/:username?"
-                            element={<ProfilePage />}
-                        />
-                    </Route>
+            <Routes>
+                <Route element={<ProtectedRoutes userAuth={userAuth} />}>
                     <Route
-                        path="/signup"
-                        element={userAuth ? <Navigate to="/" /> : <SignupPage />}
+                        path="/"
+                        element={<HomePage />}
                     />
                     <Route
-                        path="/login"
-                        element={userAuth ? <Navigate to="/" /> : <LoginPage />}
+                        path="/notifications"
+                        element={<Notifications />}
                     />
-                </Routes>
-            </main>
+                    <Route
+                        path="/profile/:username?"
+                        element={<ProfilePage />}
+                    />
+                </Route>
+                <Route
+                    path="/signup"
+                    element={userAuth ? <Navigate to="/" /> : <SignupPage />}
+                />
+                <Route
+                    path="/login"
+                    element={userAuth ? <Navigate to="/" /> : <LoginPage />}
+                />
+            </Routes>
             {userAuth && <RightPanel />}
-            {/* For messages on screen */}
+            {/* For messages(like "Created successfully" etc.) on screen */}
             <ToasterModified />
         </div>
     );

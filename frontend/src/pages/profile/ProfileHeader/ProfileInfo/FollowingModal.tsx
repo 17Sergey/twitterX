@@ -5,6 +5,8 @@ import { UserProfileType, UserType } from "../../../../utils/dataTypes";
 import UserProfile from "../../../../components/common/UserProfile";
 import FollowButton from "../../../../components/common/RightPanel/FollowButton";
 import { useQuery } from "@tanstack/react-query";
+import { QUERY_KEYS } from "../../../../utils/queryKeys";
+import { usersAPI } from "../../../../api/usersAPI";
 
 export default function FollowingModal({
     userProfile,
@@ -14,12 +16,12 @@ export default function FollowingModal({
     followingModalRef: RefObject<HTMLDialogElement>;
 }) {
     const {
-        data: followingUsers,
+        data: users,
         isLoading,
         error,
     } = useQuery<UserType>({
         queryKey: [QUERY_KEYS.PROFILE],
-        queryFn: () => usersAPI.getProfile(username),
+        queryFn: () => usersAPI.getProfile(userProfile.username),
         retry: 0,
     });
     return (
