@@ -8,6 +8,7 @@ import PostSkeleton from "../../skeletons/PostSkeleton";
 import { postsAPI } from "../../../api/postsAPI";
 import { PostType } from "../../../utils/dataTypes";
 import { QUERY_KEYS } from "../../../utils/queryKeys";
+import { useUser } from "../../../hooks/queries/useUser";
 
 const getPostsEndpoint = (
     activeTab: string,
@@ -30,7 +31,10 @@ const getPostsEndpoint = (
 };
 
 const Posts = ({ activeTab, userId }: { activeTab: string; userId?: string }) => {
-    const { username } = useParams();
+    const params = useParams();
+    const { userAuth } = useUser();
+
+    const username = params?.username || userAuth?.username || "";
 
     const endpoint = getPostsEndpoint(activeTab, username, userId);
 

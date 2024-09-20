@@ -4,4 +4,7 @@ export const QUERY_KEYS = {
     POSTS: "posts",
     NOTIFICATIONS: "notifications",
     PROFILE: "profile",
+    FOLLOWING: "following",
+    FOLLOWERS: "followers",
+    USERS: "users",
 };

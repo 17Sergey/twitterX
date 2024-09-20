@@ -1,9 +1,8 @@
 import { ComponentProps } from "react";
 import { Link } from "react-router-dom";
+import { UserProfileType } from "../../utils/dataTypes";
 
-import { UserData } from "./Sidebar/Sidebar";
-
-type UserProfileProps = UserData;
+type UserProfileProps = Pick<UserProfileType, "fullName" | "username" | "profileImg">;
 
 export default function UserProfile({ fullName, username, profileImg }: UserProfileProps) {
     return (
@@ -11,7 +10,7 @@ export default function UserProfile({ fullName, username, profileImg }: UserProf
             to={`/profile/${username}`}
             className={`cursor-pointer w-fit flex items-center gap-3`}
         >
-            <UserProfileAvatar src={profileImg} />
+            <UserProfileAvatar src={profileImg || undefined} />
             <div>
                 <UserProfileName fullName={fullName} />
                 <UserProfileUsername username={username} />
@@ -23,7 +22,7 @@ export default function UserProfile({ fullName, username, profileImg }: UserProf
 export function UserProfileAvatar({ className, src }: ComponentProps<"img">) {
     return (
         <img
-            className={`w-10 h-10 rounded-full shrink-0 ${className}`}
+            className={`w-10 h-10 rounded-full shrink-0 ${className} object-cover`}
             src={src || "/avatar-placeholder.png"}
             alt="Avatar"
         />
@@ -36,7 +35,7 @@ type UserProfileNameProps = ComponentProps<"p"> & {
 export function UserProfileName({ fullName, className }: UserProfileNameProps) {
     return (
         <p
-            className={`font-semibold text-[--theme-accent] text-base ${className}`}
+            className={`font-semibold text-[--theme-accent] text-sm md:text-base ${className}`}
             title={fullName}
         >
             {fullName}

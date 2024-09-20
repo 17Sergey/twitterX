@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 
 import UserProfileSkeleton from "../../skeletons/UserProfileSkeleton";
 import { UserProfileAvatar, UserProfileName, UserProfileUsername } from "../UserProfile";
-import FollowButton from "./FollowButton";
+import FollowButton from "../FollowButton";
 
 import { UserType } from "../../../utils/dataTypes";
 import { usersAPI } from "../../../api/usersAPI";
 import { QUERY_KEYS } from "../../../utils/queryKeys";
-import { useUser } from "../../../hooks/queries/useUser";
 
 export default function RightPanel() {
     const {
@@ -21,10 +20,8 @@ export default function RightPanel() {
         retry: false,
     });
 
-    const { userAuth } = useUser();
-
     return (
-        <aside className="hidden lg:block shrink-0 sticky top-4 h-fit max-w-72 rounded-lg bg-base-300 p-4">
+        <aside className="hidden lg:block shrink-0 sticky top-4 h-fit w-72 max-w-72 rounded-lg bg-base-300 p-4">
             <p className="font-bold mb-4">Who to follow</p>
             {error && <p className="text-error-content">{error.message}</p>}
             {isLoading && (
@@ -70,7 +67,6 @@ export default function RightPanel() {
                             <FollowButton
                                 key={user._id}
                                 userId={user._id}
-                                isFollowedProp={userAuth?.following.includes(user._id) || false}
                             />
                         </div>
                     );

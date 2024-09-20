@@ -4,8 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import HomePage from "./pages/home/HomePage";
 import SignupPage from "./pages/auth/SignupPage";
 import LoginPage from "./pages/auth/LoginPage";
-import Notifications from "./pages/notifications/Notifications";
 import ProfilePage from "./pages/profile/ProfilePage";
+import NotificationsPage from "./pages/notifications/NotificationsPage";
+import UsersPage from "./pages/users/UsersPage";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
 
 import Sidebar from "./components/common/Sidebar/Sidebar";
@@ -45,8 +46,12 @@ function App() {
                         element={<HomePage />}
                     />
                     <Route
+                        path="/users"
+                        element={<UsersPage />}
+                    />
+                    <Route
                         path="/notifications"
-                        element={<Notifications />}
+                        element={<NotificationsPage />}
                     />
                     <Route
                         path="/profile/:username?"

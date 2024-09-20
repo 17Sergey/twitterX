@@ -4,6 +4,7 @@ import { protectRoute } from "../middleware/protectRoute.js";
 
 import {
     followUnfollowUser,
+    getAllUsers,
     getSuggestedUsers,
     getUserFollowers,
     getUserFollowing,
@@ -12,6 +13,8 @@ import {
 } from "../controllers/user.controllers.js";
 
 const router = express.Router();
+
+router.get("/", protectRoute, getAllUsers);
 
 router.get("/suggested", protectRoute, getSuggestedUsers);
 

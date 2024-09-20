@@ -9,7 +9,7 @@ import { QUERY_KEYS } from "../../utils/queryKeys";
 import { NotificationType } from "../../utils/dataTypes";
 import { notificationsAPI } from "../../api/notificationsAPI";
 
-export default function Notifications() {
+export default function NotificationsPage() {
     const {
         data: notifications,
         isLoading,

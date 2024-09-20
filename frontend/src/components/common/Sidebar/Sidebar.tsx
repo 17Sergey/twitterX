@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { MdHomeFilled } from "react-icons/md";
+import { HiUsers } from "react-icons/hi";
 import { IoNotifications } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
@@ -15,12 +16,6 @@ import SidebarMenuItem from "./SidebarMenuItem";
 import { authAPI } from "../../../api/authAPI.ts";
 import { UserType } from "../../../utils/dataTypes";
 import { QUERY_KEYS } from "../../../utils/queryKeys";
-
-export type UserData = {
-    fullName: string;
-    username: string;
-    profileImg: string;
-};
 
 export default function Sidebar() {
     const { data: userAuth } = useQuery<UserType>({ queryKey: [QUERY_KEYS.USER_AUTH] });
@@ -57,6 +52,11 @@ export default function Sidebar() {
                     icon={<MdHomeFilled className={iconStyles} />}
                     text={"Home"}
                     path="/"
+                />
+                <SidebarMenuItem
+                    icon={<HiUsers className={iconStyles} />}
+                    text={"Users"}
+                    path="/users"
                 />
                 <SidebarMenuItem
                     icon={<IoNotifications className={iconStyles} />}

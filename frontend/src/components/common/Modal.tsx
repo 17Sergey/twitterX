@@ -1,5 +1,6 @@
 import { ComponentProps, RefObject, useRef } from "react";
 import { useOnClickOutside } from "usehooks-ts";
+import ToasterModified from "./ToasterModified";
 
 type ModalProps = {
     title: string;
@@ -20,6 +21,8 @@ export default function Modal({ title, children, modalRef }: ModalProps) {
             className="modal cursor-pointer"
             ref={modalRef}
         >
+            {/* By default dialog tag is over any html content. So we need to place Toaster in it to be able to see a notification */}
+            <ToasterModified />
             <div
                 ref={modalBox}
                 className="modal-box p-6 pr-0 mx-2 w-4/5 flex flex-col max-w-3xl border border-neutral md:border-neutral-content cursor-default"

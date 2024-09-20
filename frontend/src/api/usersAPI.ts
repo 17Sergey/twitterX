@@ -3,6 +3,30 @@ import { Nullable } from "../utils/dataTypes";
 async function getSuggestedUsers() {
     const res = await fetch(`/api/users/suggested`);
 
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    return data;
+}
+
+async function getFollowingUsers(username: string) {
+    const res = await fetch(`/api/users/profile/following/${username}`);
+
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    return data;
+}
+
+async function getFollowers(username: string) {
+    const res = await fetch(`/api/users/profile/followers/${username}`);
+
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+
     const data = await res.json();
     if (data.error) throw new Error(data.error);
 
@@ -11,6 +35,19 @@ async function getSuggestedUsers() {
 
 async function getProfile(username: string) {
     const res = await fetch(`/api/users/profile/${username}`);
+
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    return data;
+}
+
+async function getAll() {
+    const res = await fetch(`/api/users`);
+
+    if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
 
     const data = await res.json();
     if (data.error) throw new Error(data.error);
@@ -61,4 +98,7 @@ export const usersAPI = {
     follow,
     getProfile,
     updateProfile,
+    getFollowingUsers,
+    getFollowers,
+    getAll,
 };

@@ -10,27 +10,27 @@ import { UserProfileType } from "../../../../utils/dataTypes";
 import { QUERY_KEYS } from "../../../../utils/queryKeys";
 import { usersAPI } from "../../../../api/usersAPI";
 
-export default function FollowingModal({
+export default function FollowersModal({
     userProfile,
-    followingModalRef,
+    followersModalRef,
 }: {
     userProfile: UserProfileType;
-    followingModalRef: RefObject<HTMLDialogElement>;
+    followersModalRef: RefObject<HTMLDialogElement>;
 }) {
     const {
-        data: followingUsers,
+        data: followers,
         isLoading,
         error,
     } = useQuery<UserProfileType[]>({
-        queryKey: [QUERY_KEYS.FOLLOWING],
-        queryFn: () => usersAPI.getFollowingUsers(userProfile.username),
+        queryKey: [QUERY_KEYS.FOLLOWERS],
+        queryFn: () => usersAPI.getFollowers(userProfile.username),
         retry: 0,
     });
 
     return (
         <Modal
-            title={"FOLLOWING"}
-            modalRef={followingModalRef}
+            title={"FOLLOWERS"}
+            modalRef={followersModalRef}
         >
             {isLoading && (
                 <>
@@ -50,7 +50,7 @@ export default function FollowingModal({
             )}
             <div className="overflow-y-auto max-h-96 pr-4">
                 <div className="flex flex-col gap-4">
-                    {followingUsers?.map((user) => {
+                    {followers?.map((user) => {
                         return (
                             <div className="flex justify-between items-center gap-4">
                                 <UserProfile
@@ -65,9 +65,7 @@ export default function FollowingModal({
                         );
                     })}
                 </div>
-                {followingUsers && followingUsers.length === 0 && (
-                    <p>Oops...Not following anyone yet.</p>
-                )}
+                {followers && followers?.length === 0 && <p>Oops...No followers yet.</p>}
                 {error && <p className="text-error-content">{error.message}</p>}
             </div>
         </Modal>

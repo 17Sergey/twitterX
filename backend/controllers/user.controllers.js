@@ -172,6 +172,16 @@ export const getSuggestedUsers = async (req, res) => {
     }
 };
 
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).json(users);
+    } catch (error) {
+        console.error(`Error in getSuggestedUsers controller: ${error.message}`);
+        res.status(500).json({ error: "Server error" });
+    }
+};
+
 export const updateUser = async (req, res) => {
     try {
         const { fullName, email, username, currentPassword, newPassword, bio, link } = req.body;
