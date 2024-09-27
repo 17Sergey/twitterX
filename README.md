@@ -1,6 +1,8 @@
 # Twitter clone
 
-## To try it out, visit the link below. (Warning! It might take about a minute or two for the page to load because the deployment plan is free. Thanks for your patience!)
+## To try it out, visit the link below.
+
+### (It might take about a minute or two for the page to load because the deployment plan is free. Thanks for your patience!)
 
 ### [http://localhost:5000](https://twitterx-i83a.onrender.com/).
 
