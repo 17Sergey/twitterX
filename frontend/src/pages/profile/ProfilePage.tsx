@@ -25,7 +25,7 @@ export default function ProfilePage() {
         <div>
             {userProfile && (
                 <>
-                    {/* Use query inside to prevent passing with props? */}
+                    {/* TODO: Use query inside to prevent passing with props? */}
                     <ProfileMenu userProfile={userProfile} />
                     <ProfileHeader userProfile={userProfile} />
                     <ProfilePosts userProfile={userProfile} />
