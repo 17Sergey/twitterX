@@ -72,11 +72,11 @@ export default function EditProfileModal({
             >
                 {/* By default dialog tag is over any html content. So we need to place Toaster in it to be able to see a notification */}
                 <ToasterModified />
-                <div className="modal-box p-0 w-4/5 max-w-2xl border border-neutral md:border-neutral-content shadow-md overflow-hidden">
+                <div className="w-4/5 max-w-2xl p-0 overflow-hidden border shadow-md modal-box border-neutral md:border-neutral-content">
                     <div className="p-6 pb-0">
-                        <h3 className="font-bold text-lg mb-4">Update Profile</h3>
+                        <h3 className="mb-4 text-lg font-bold">Update Profile</h3>
                         <form method="dialog">
-                            <button className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 outline-none">
+                            <button className="absolute outline-none btn btn-sm btn-circle btn-ghost right-4 top-4">
                                 ✕
                             </button>
                         </form>
@@ -85,12 +85,12 @@ export default function EditProfileModal({
                         className="flex flex-col gap-2 md:gap-4"
                         onSubmit={handleSubmit}
                     >
-                        <div className="px-6 overflow-y-auto max-h-96 flex flex-col gap-2 md:gap-4">
+                        <div className="flex flex-col gap-2 px-6 overflow-y-auto max-h-96 md:gap-4">
                             <div className="flex flex-wrap gap-2">
                                 <input
                                     type="text"
                                     placeholder="Full Name"
-                                    className="flex-1 input input-bordered rounded p-2 input-md"
+                                    className="flex-1 p-2 rounded input input-bordered input-md"
                                     value={formData.fullName}
                                     name="fullName"
                                     onChange={handleInputChange}
@@ -98,24 +98,24 @@ export default function EditProfileModal({
                                 <input
                                     type="text"
                                     placeholder="Username"
-                                    className="flex-1 input input-bordered rounded p-2 input-md"
+                                    className="flex-1 p-2 rounded input input-bordered input-md"
                                     value={formData.username}
                                     name="username"
                                     onChange={handleInputChange}
                                 />
                             </div>
-                            <div className="flex flex-col md:flex-row flex-wrap gap-2">
+                            <div className="flex flex-col flex-wrap gap-2 md:flex-row">
                                 <input
                                     type="email"
                                     placeholder="Email"
-                                    className="flex-1 input input-bordered rounded p-2 input-md"
+                                    className="flex-1 p-2 rounded input input-bordered input-md"
                                     value={formData.email}
                                     name="email"
                                     onChange={handleInputChange}
                                 />
                                 <textarea
                                     placeholder="Bio"
-                                    className="flex-1 input input-bordered rounded p-2 input-md"
+                                    className="flex-1 p-2 rounded input input-bordered input-md"
                                     value={formData.bio}
                                     name="bio"
                                     onChange={handleInputChange}
@@ -125,7 +125,7 @@ export default function EditProfileModal({
                                 <input
                                     type="password"
                                     placeholder="Current Password"
-                                    className="flex-1 input input-bordered rounded p-2 input-md"
+                                    className="flex-1 p-2 rounded input input-bordered input-md"
                                     value={formData.currentPassword}
                                     name="currentPassword"
                                     onChange={handleInputChange}
@@ -133,7 +133,7 @@ export default function EditProfileModal({
                                 <input
                                     type="password"
                                     placeholder="New Password"
-                                    className="flex-1 input input-bordered rounded p-2 input-md"
+                                    className="flex-1 p-2 rounded input input-bordered input-md"
                                     value={formData.newPassword}
                                     name="newPassword"
                                     onChange={handleInputChange}
@@ -142,7 +142,7 @@ export default function EditProfileModal({
                             <input
                                 type="text"
                                 placeholder="Link"
-                                className="flex-1 input input-bordered rounded p-2 input-md min-h-11"
+                                className="flex-1 p-2 rounded input input-bordered input-md min-h-11"
                                 value={formData.link}
                                 name="link"
                                 onChange={handleInputChange}
